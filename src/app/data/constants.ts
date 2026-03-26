@@ -7,18 +7,18 @@ export const NAV_ITEMS = [
 ];
 
 export const SOCIAL_LINKS = [
-  { name: 'GitHub', href: 'https://github.com/yourusername', icon: 'github' },
-  { name: 'LinkedIn', href: 'https://linkedin.com/in/yourusername', icon: 'linkedin' },
-  { name: 'Twitter', href: 'https://twitter.com/yourusername', icon: 'twitter' },
-  { name: 'Email', href: 'mailto:your.email@example.com', icon: 'email' },
+  { name: 'GitHub', href: 'https://github.com/muzamilCodes', icon: 'github' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/war-muzamil-6851363ba?utm_source=share_via&utm_content=profile&utm_medium=member_android', icon: 'linkedin' },
+  { name: 'Twitter', href: 'https://x.com/MuzamilCoder', icon: 'twitter' },
+  { name: 'Email', href: 'warmuzamil68@gmail.com', icon: 'email' },
 ];
 
 export const CONTACT_INFO = {
-  email: 'your.email@example.com',
-  phone: '+91 12345 67890',
-  location: 'Your City, India',
-  github: 'https://github.com/yourusername',
-  linkedin: 'https://linkedin.com/in/yourusername',
+  email: 'warmuzamil68@gmail.com',
+  phone: '+91 9682645127',
+  location: 'Srinager',
+  github: 'https://github.com/muzamilCodes',
+  linkedin: 'https://www.linkedin.com/in/war-muzamil-6851363ba?utm_source=share_via&utm_content=profile&utm_medium=member_android',
 };
 
 export const HERO_TITLES = [
@@ -29,8 +29,8 @@ export const HERO_TITLES = [
 ];
 
 export const ABOUT_STATS = [
-  { value: '3+', label: 'Years Experience' },
-  { value: '50+', label: 'Projects Completed' },
-  { value: '30+', label: 'Happy Clients' },
-  { value: '10+', label: 'Certifications' },
+  { value: '1+', label: 'Years Experience' },
+  { value: '7+', label: 'Projects Completed' },
+  { value: '15+', label: 'Happy Clients' },
+  { value: '1+', label: 'Certifications' },
 ];

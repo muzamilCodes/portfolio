@@ -18,7 +18,7 @@ export const projects: Project[] = [
     longDescription: "A complete e-commerce solution with user authentication, payment integration, admin dashboard, and real-time inventory management.",
     tech: ["React.js", "Express.js", "MongoDB", "Node.js", "React-router-dom", "Redux"],
     githubUrl: "https://github.com/muzamilCodes/organic-food-kashmir",
-    liveUrl: "https://organic-food-kashmir.vercel.app",
+    liveUrl: "https://new-soprtify-kashmir.vercel.app/",
     image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=400&fit=crop",
     features: [
       "User authentication & authorization",
