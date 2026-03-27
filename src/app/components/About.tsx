@@ -12,15 +12,9 @@ export default function About() {
     { icon: <FiAward />, value: '2', label: 'Certifications' },
   ];
 
-  // Square image URLs
-  const squareImageUrls = {
-    dicebear: "https://scontent.fsxr1-2.fna.fbcdn.net/v/t39.30808-1/298218688_587014296434298_4248133431627928893_n.jpg?stp=c0.0.612.612a_dst-jpg_s200x200_tt6&_nc_cat=107&ccb=1-7&_nc_sid=1d2534&_nc_ohc=xhKiF-xQejMQ7kNvwHqYwwd&_nc_oc=AdnbcszYSRbYrj5RvOX7rJJiNVlK0WTv7KAozEczL18h-V7qK28B84D3Wl235781QJ9hbtN9KKbfIUM7gpJy2SJz&_nc_zt=24&_nc_ht=scontent.fsxr1-2.fna&_nc_gid=5zn5SHts2iIjhhaU-laHYA&oh=00_Afm7qWHMBCARUZBcUchy38wjeVhpVYlUw-Pl7DfT52Gf2Q&oe=695887D8",
-  };
-
-  // Choose any image URL
-  const profileImageUrl = squareImageUrls.dicebear;
-
-  return (
+  // Use a reliable image source. For your own photo, place it in public/profile.jpg and set profileImageUrl = '/profile.jpg'.
+  // A stable public fallback avatar is used by default.
+  const profileImageUrl = 'https://ui-avatars.com/api/?name=War+Muzamil&size=320&background=2563eb&color=fff';\n\n  return (
     <section id="about" className="py-20">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -48,7 +42,7 @@ export default function About() {
                   <div className="relative w-full h-full rounded-xl overflow-hidden shadow-2xl border-4 border-white dark:border-gray-800">
                     <Image
                       src={profileImageUrl}
-                      alt="Muzamil War - Full Stack Developer"
+                      alt="War Muzamil - Full Stack Developer"
                       fill
                       className="object-cover"
                       sizes="(max-width: 768px) 288px, 320px"
@@ -63,7 +57,7 @@ export default function About() {
                   {/* Name Badge */}
                   <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-900 px-6 py-3 rounded-full shadow-xl border border-gray-200 dark:border-gray-700">
                     <div className="text-center">
-                      <h3 className="font-bold text-lg text-gray-800 dark:text-white">Muzamil War</h3>
+                      <h3 className="font-bold text-lg text-gray-800 dark:text-white">War MUzamil</h3>
                       <p className="text-sm text-blue-600 dark:text-blue-400">Full Stack Developer</p>
                     </div>
                   </div>
@@ -124,16 +118,16 @@ export default function About() {
               <h2 className="text-4xl md:text-5xl font-bold mb-6">About Me</h2>
               <div className="space-y-4 text-gray-600 dark:text-gray-400">
                 <p>
-                  I'm a passionate Full Stack Developer with expertise in modern web technologies. 
+                  I&apos;m a passionate Full Stack Developer with expertise in modern web technologies. 
                   I specialize in building scalable applications using React, Next.js, .NET Core, and Express.
                 </p>
                 <p>
-                  With 1 year of experience, I've worked on various projects ranging from 
+                  With 1 year of experience, I&apos;ve worked on various projects ranging from 
                   enterprise applications to startup MVPs. I believe in writing clean, maintainable 
                   code and following best practices.
                 </p>
                 <p>
-                  When I'm not coding, I enjoy learning new technologies, contributing to open-source 
+                  When I&apos;m not coding, I enjoy learning new technologies, contributing to open-source 
                   projects, and sharing knowledge through blog posts and tutorials.
                 </p>
               </div>
