@@ -34,7 +34,7 @@ export default function Contact() {
     },
     { 
       name: "LinkedIn", 
-      link: "https://www.linkedin.com/in/war-muzamil-455774378/", 
+      link: "https://www.linkedin.com/in/muzamilCodes", 
       icon: <FiLinkedin />,
       color: "bg-blue-600 hover:bg-blue-700" 
     },
@@ -57,7 +57,7 @@ export default function Contact() {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">Get In Touch</h2>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Have a project in mind? Let's discuss how we can work together
+            Have a project in mind? Let&apos;s discuss how we can work together
           </p>
         </motion.div>
 

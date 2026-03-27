@@ -1,4 +1,5 @@
-// src/app/thank-you/page.tsx
+import Link from 'next/link';
+
 export default function ThankYou() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
@@ -10,14 +11,11 @@ export default function ThankYou() {
         </div>
         <h1 className="text-3xl font-bold mb-4">Message Sent Successfully!</h1>
         <p className="text-gray-600 dark:text-gray-400 mb-6">
-          Thank you for your message. I'll get back to you within 24 hours.
+          Thank you for your message. I&apos;ll get back to you within 24 hours.
         </p>
-        <a 
-          href="/" 
-          className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-        >
+        <Link href="/" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
           ← Back to Portfolio
-        </a>
+        </Link>
       </div>
     </div>
   );

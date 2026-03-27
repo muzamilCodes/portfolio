@@ -8,17 +8,17 @@ export const NAV_ITEMS = [
 
 export const SOCIAL_LINKS = [
   { name: 'GitHub', href: 'https://github.com/muzamilCodes', icon: 'github' },
-  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/war-muzamil-6851363ba?utm_source=share_via&utm_content=profile&utm_medium=member_android', icon: 'linkedin' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/muzamilCodes', icon: 'linkedin' },
   { name: 'Twitter', href: 'https://x.com/MuzamilCoder', icon: 'twitter' },
-  { name: 'Email', href: 'warmuzamil68@gmail.com', icon: 'email' },
+  { name: 'Email', href: 'mailto:warmuzamil68@gmail.com', icon: 'email' },
 ];
 
 export const CONTACT_INFO = {
   email: 'warmuzamil68@gmail.com',
   phone: '+91 9682645127',
-  location: 'Srinager',
+  location: 'Srinagar',
   github: 'https://github.com/muzamilCodes',
-  linkedin: 'https://www.linkedin.com/in/war-muzamil-6851363ba?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+  linkedin: 'https://www.linkedin.com/in/muzamilCodes',
 };
 
 export const HERO_TITLES = [
