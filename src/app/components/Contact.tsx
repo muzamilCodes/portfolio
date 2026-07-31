@@ -1,9 +1,13 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { FiMail, FiMapPin, FiPhone, FiSend, FiGithub, FiLinkedin, FiTwitter } from 'react-icons/fi';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiMail, FiMapPin, FiPhone, FiSend, FiGithub, FiLinkedin, FiTwitter, FiCheckCircle, FiAlertCircle } from 'react-icons/fi';
 
 export default function Contact() {
+  const [formState, setFormState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
   const contactInfo = [
     {
       icon: <FiMail className="text-lg" />,
@@ -48,6 +52,38 @@ export default function Contact() {
       color: "bg-sky-400 border-sky-300 text-white hover:text-primary" 
     },
   ];
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormState('loading');
+    setErrorMessage('');
+
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/warmuzamil68@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      
+      if (response.ok && result.success === "true") {
+        setFormState('success');
+      } else {
+        setFormState('error');
+        setErrorMessage(result.message || 'Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      setFormState('error');
+      setErrorMessage('Could not connect to the mail server. Please check your internet connection.');
+    }
+  };
 
   return (
     <section id="contact" className="py-20 relative bg-background transition-colors duration-300">
@@ -135,103 +171,164 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Right: Contact Form */}
+          {/* Right: Contact Form Card */}
           <motion.div
             initial={{ opacity: 0, x: 25 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-7 bg-white/40 dark:bg-slate-900/40 glass-panel border border-card-border rounded-2xl p-6 sm:p-8 shadow-sm"
+            className="lg:col-span-7 bg-white/40 dark:bg-slate-900/40 glass-panel border border-card-border rounded-2xl p-6 sm:p-8 shadow-sm relative min-h-[460px] flex flex-col justify-center"
           >
-            <h3 className="text-2xl font-bold tracking-tight mb-6 text-left">
-              Send a Message
-            </h3>
-            
-            <form 
-              action="https://formsubmit.co/warmuzamil68@gmail.com" 
-              method="POST"
-              className="space-y-5 text-left"
-            >
-              {/* FormSubmit.co configurations */}
-              <input type="hidden" name="_subject" value="New Message from Portfolio!" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_next" value="https://muzamilcodes.vercel.app/thank-you" />
-              <input type="text" name="_honey" className="hidden" />
-              
-              <div className="grid md:grid-cols-2 gap-5">
-                <div className="space-y-2">
-                  <label htmlFor="name" className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Your Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    className="w-full px-4 py-3 rounded-xl border border-card-border bg-white/50 dark:bg-slate-950/50 text-gray-800 dark:text-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all duration-300"
-                    placeholder="John Doe"
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <label htmlFor="email" className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    className="w-full px-4 py-3 rounded-xl border border-card-border bg-white/50 dark:bg-slate-950/50 text-gray-800 dark:text-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all duration-300"
-                    placeholder="john@example.com"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="subject" className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Subject *
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  required
-                  className="w-full px-4 py-3 rounded-xl border border-card-border bg-white/50 dark:bg-slate-950/50 text-gray-800 dark:text-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all duration-300"
-                  placeholder="Freelance Project / Job Opportunity"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Message *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={4}
-                  className="w-full px-4 py-3 rounded-xl border border-card-border bg-white/50 dark:bg-slate-950/50 text-gray-800 dark:text-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all duration-300 resize-none"
-                  placeholder="Outline your project scope, deadlines, and requirements..."
-                />
-              </div>
-
-              <div className="space-y-4 pt-2">
-                <motion.button
-                  type="submit"
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.99 }}
-                  className="w-full px-6 py-3.5 bg-gradient-to-r from-primary to-secondary text-white rounded-xl font-bold text-xs uppercase tracking-widest shadow-md shadow-primary/10 hover:shadow-lg hover:shadow-primary/20 hover:opacity-95 transition-all flex items-center justify-center gap-2"
+            <AnimatePresence mode="wait">
+              {formState === 'success' ? (
+                /* Success Card View */
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="text-center py-8 space-y-6 flex flex-col items-center"
                 >
-                  <FiSend className="text-sm" />
-                  <span>Send Inquiry Message</span>
-                </motion.button>
-                
-                <p className="text-center text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-                  Inquiries are routed directly to my personal inbox
-                </p>
-              </div>
-            </form>
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1, rotate: 360 }}
+                    transition={{ type: 'spring', stiffness: 100, delay: 0.1 }}
+                  >
+                    <FiCheckCircle className="text-6xl text-emerald-500" />
+                  </motion.div>
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-bold text-gray-800 dark:text-white">Message Sent Successfully!</h3>
+                    <p className="text-gray-500 dark:text-gray-400 max-w-sm mx-auto text-sm leading-relaxed">
+                      Thank you for reaching out. I have received your message and will get back to you within 24 hours.
+                    </p>
+                  </div>
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setFormState('idle')}
+                    className="px-6 py-2.5 bg-gradient-to-r from-primary to-secondary text-white rounded-full font-bold text-xs uppercase tracking-widest shadow-md"
+                  >
+                    Send Another Message
+                  </motion.button>
+                </motion.div>
+              ) : (
+                /* Main Form View */
+                <motion.div
+                  key="form"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <h3 className="text-2xl font-bold tracking-tight mb-6 text-left">
+                    Send a Message
+                  </h3>
+                  
+                  <form onSubmit={handleSubmit} className="space-y-5 text-left">
+                    <div className="grid md:grid-cols-2 gap-5">
+                      <div className="space-y-2">
+                        <label htmlFor="name" className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                          Your Name *
+                        </label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          required
+                          disabled={formState === 'loading'}
+                          className="w-full px-4 py-3 rounded-xl border border-card-border bg-white/50 dark:bg-slate-950/50 text-gray-800 dark:text-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all duration-300 disabled:opacity-55"
+                          placeholder="John Doe"
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <label htmlFor="email" className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                          Email Address *
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          required
+                          disabled={formState === 'loading'}
+                          className="w-full px-4 py-3 rounded-xl border border-card-border bg-white/50 dark:bg-slate-950/50 text-gray-800 dark:text-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all duration-300 disabled:opacity-55"
+                          placeholder="john@example.com"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label htmlFor="subject" className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                        Subject *
+                      </label>
+                      <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        required
+                        disabled={formState === 'loading'}
+                        className="w-full px-4 py-3 rounded-xl border border-card-border bg-white/50 dark:bg-slate-950/50 text-gray-800 dark:text-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all duration-300 disabled:opacity-55"
+                        placeholder="Freelance Project / Job Opportunity"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label htmlFor="message" className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                        Message *
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        required
+                        rows={4}
+                        disabled={formState === 'loading'}
+                        className="w-full px-4 py-3 rounded-xl border border-card-border bg-white/50 dark:bg-slate-950/50 text-gray-800 dark:text-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all duration-300 resize-none disabled:opacity-55"
+                        placeholder="Outline your project scope, deadlines, and requirements..."
+                      />
+                    </div>
+
+                    {/* Error message notification block */}
+                    {formState === 'error' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex items-center space-x-2 p-3.5 bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-450 rounded-xl text-xs"
+                      >
+                        <FiAlertCircle className="text-base flex-shrink-0" />
+                        <span>{errorMessage}</span>
+                      </motion.div>
+                    )}
+
+                    <div className="space-y-4 pt-2">
+                      <motion.button
+                        type="submit"
+                        disabled={formState === 'loading'}
+                        whileHover={{ scale: 1.01 }}
+                        whileTap={{ scale: 0.99 }}
+                        className="w-full px-6 py-3.5 bg-gradient-to-r from-primary to-secondary text-white rounded-xl font-bold text-xs uppercase tracking-widest shadow-md shadow-primary/10 hover:shadow-lg hover:shadow-primary/20 hover:opacity-95 transition-all flex items-center justify-center gap-2 disabled:opacity-55 cursor-pointer disabled:cursor-not-allowed"
+                      >
+                        {formState === 'loading' ? (
+                          <div className="flex items-center space-x-2">
+                            <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                            </svg>
+                            <span>Sending Message...</span>
+                          </div>
+                        ) : (
+                          <>
+                            <FiSend className="text-sm" />
+                            <span>Send Inquiry Message</span>
+                          </>
+                        )}
+                      </motion.button>
+                      
+                      <p className="text-center text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+                        Inquiries are routed directly to my personal inbox
+                      </p>
+                    </div>
+                  </form>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         </div>
 
@@ -253,4 +350,4 @@ export default function Contact() {
       </div>
     </section>
   );
-}
+}

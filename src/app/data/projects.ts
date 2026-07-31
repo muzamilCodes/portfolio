@@ -78,6 +78,24 @@ export const projects: Project[] = [
       "Improved Cart flows",
       "Admin Inventory Controls"
     ]
+  },
+  {
+    id: 5,
+    title: "Talexa Job Portal",
+    description: "Enterprise recruitment and career matchmaking platform.",
+    longDescription: "A modern job recruitment application built for seamless candidate discovery, resume screening, and job match tracking. Integrates separate workflows for job seekers and hiring managers.",
+    tech: ["React.js", "Next.js", "Node.js", "Express.js", "PostgreSQL", "Tailwind CSS"],
+    githubUrl: "https://github.com/muzamilCodes",
+    liveUrl: "https://talexa.ilsimperiatech.com/",
+    image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&h=400&fit=crop",
+    features: [
+      "Job Seeker Profile Creation & CV Upload",
+      "Dynamic Job Posting & Custom Filters",
+      "Hiring Managers Dashboard",
+      "Role-Based Dashboards & Auth",
+      "Real-Time Candidate Review flows"
+    ]
   }
 ];
+
   
