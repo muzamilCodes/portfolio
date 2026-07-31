@@ -7,8 +7,9 @@ import Footer from '@/app/components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Your Name | Full Stack Developer',
-  description: 'Professional portfolio showcasing React, Next.js, .NET Core, and Express projects',
+  title: 'Muzamil War | Full Stack Developer & Next.js Expert',
+  description: 'Professional portfolio of Muzamil War, showcasing React, Next.js, .NET Core, Express.js and TypeScript projects.',
+  keywords: ['Muzamil War', 'Full Stack Developer', 'Kashmir Developer', 'React Expert', 'Next.js Developer', '.NET Developer'],
 }
 
 export default function RootLayout({
@@ -18,7 +19,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
+      </head>
+      <body className={`${inter.className} antialiased`}>
         <Navbar />
         <main className="min-h-screen">
           {children}

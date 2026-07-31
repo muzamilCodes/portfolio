@@ -13,110 +13,71 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 1,
-    title: "E-Commerce Platform",
-    description: "Full-stack e-commerce with React.js and Express.js",
-    longDescription: "A complete e-commerce solution with user authentication, payment integration, admin dashboard, and real-time inventory management.",
-    tech: ["React.js", "Express.js", "MongoDB", "Node.js", "React-router-dom", "Redux"],
-    githubUrl: "https://github.com/muzamilCodes/organic-food-kashmir",
-    liveUrl: "https://new-soprtify-kashmir.vercel.app/",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=400&fit=crop",
+    title: "Quick Services Marketplace",
+    description: "On-demand local services platform connecting clients with service providers.",
+    longDescription: "A comprehensive service booking and booking management platform where users can discover, book, and review local service experts. Features real-time notifications, OTP verification, and booking dashboards.",
+    tech: ["React.js", "Node.js", "Express.js", "MongoDB", "Tailwind CSS", "REST APIs"],
+    githubUrl: "https://github.com/muzamilCodes/QuickServices",
+    liveUrl: "https://quick-services-indol.vercel.app",
+    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=400&fit=crop",
     features: [
-      "User authentication & authorization",
-      "Payment gateway integration",
-      "Admin dashboard with analytics",
-      "Real-time notifications",
-      "Product search & filtering",
-      "Order tracking system"
+      "User & Provider Authentication",
+      "Service Discovery & Filters",
+      "OTP Verification System",
+      "Service Booking & Schedules",
+      "Rating & Review system"
     ]
   },
   {
     id: 2,
-    title: "Blog Platform",
-    description: "Modern blogging platform with CMS",
-    longDescription: "A feature-rich blogging platform with content management system, SEO optimization, and social features.",
-    tech: ["Next.js 14", "TypeScript", "Tailwind CSS", "MongoDB"],
-    githubUrl: "https://github.com/muzamilCodes/blog-platform",
-    liveUrl: "https://blogplatform.demo",
-    image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&h=400&fit=crop",
+    title: "ASIAN MALL E-Commerce",
+    description: "Modern retail and shopping mall platform with responsive landing pages.",
+    longDescription: "A high-performance online retail experience modeled for shopping malls. Features curated store listings, product catalogs, rich landing pages, and interactive UI/UX filters.",
+    tech: ["Next.js", "React.js", "Tailwind CSS", "Framer Motion", "TypeScript"],
+    githubUrl: "https://github.com/muzamilCodes/ASIAN-MALL",
+    liveUrl: "https://asian-mall.vercel.app",
+    image: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=800&h=400&fit=crop",
     features: [
-      "SSR for SEO optimization",
-      "Rich text editor",
-      "Comment system",
-      "User roles & permissions",
-      "Analytics dashboard",
-      "Social sharing"
+      "Refined Landing Page UI & Content",
+      "Store Finder & Directory",
+      "Dynamic Catalog Filtering",
+      "Responsive Layouts",
+      "Optimized SEO Meta Tags"
     ]
   },
-  // {
-  //   id: 3,
-  //   title: "Task Management App",
-  //   description: "Productivity app for task management",
-  //   longDescription: "A responsive task management application with drag & drop features, priority settings, and progress tracking.",
-  //   tech: ["React", "TypeScript", "Tailwind CSS", "Context API", "Local Storage"],
-  //   githubUrl: "https://github.com/muzamilCodes/task-manager",
-  //   liveUrl: "https://task-manager-muzamil.vercel.app",
-  //   image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&h=400&fit=crop",
-  //   features: [
-  //     "Drag & drop interface",
-  //     "Priority & deadline settings",
-  //     "Progress tracking",
-  //     "Dark/Light mode",
-  //     "Local storage",
-  //     "Responsive design"
-  //   ]
-  // },
+  {
+    id: 3,
+    title: "Sportify Kashmir Store",
+    description: "Sports goods and apparel e-commerce platform built for Kashmir athletes.",
+    longDescription: "An e-commerce storefront dedicated to sport equipment and custom apparel in Kashmir. Integrates cart state management, checkout flows, and payment pathways.",
+    tech: ["React.js", "Redux", "Tailwind CSS", "Express.js", "MongoDB"],
+    githubUrl: "https://github.com/muzamilCodes/Sportify-Kashmir1",
+    liveUrl: "https://sportify-kashmir1.vercel.app",
+    image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&h=400&fit=crop",
+    features: [
+      "Product Catalog",
+      "Cart State Management",
+      "Secure Checkout",
+      "Order History",
+      "Custom Sports Apparels"
+    ]
+  },
   {
     id: 4,
-    title: "Portfolio Website",
-    description: "Personal portfolio with modern design",
-    longDescription: "A responsive portfolio website showcasing projects, skills, and experience with animations and contact form.",
-    tech: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    githubUrl: "https://github.com/muzamilCodes/portfolio",
-    liveUrl: "https://muzamilcodes.vercel.app",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop",
+    title: "New Sportify Kashmir (V2)",
+    description: "Upgraded performance-tuned version of the Sportify Kashmir store.",
+    longDescription: "The next generation of the Sportify Kashmir e-commerce platform, optimizing speed, SEO, and visual aesthetics. Built using modern UI architectures for a premium buying experience.",
+    tech: ["React.js", "Vite", "Tailwind CSS", "Context API", "Node.js"],
+    githubUrl: "https://github.com/muzamilCodes/new-soprtify-kashmir",
+    liveUrl: "https://new-soprtify-kashmir.vercel.app",
+    image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&h=400&fit=crop",
     features: [
-      "Responsive design",
-      "Smooth animations",
-      "Project showcase",
-      "Contact form",
-      "Dark/Light mode",
-      "SEO optimized"
+      "Optimized Fast Loading",
+      "Clean Minimalist Design",
+      "Smooth Micro-animations",
+      "Improved Cart flows",
+      "Admin Inventory Controls"
     ]
-  },
-  // {
-  //   id: 5,
-  //   title: "API Dashboard",
-  //   description: "Monitoring dashboard for APIs",
-  //   longDescription: "A comprehensive dashboard to monitor, analyze, and manage multiple APIs with performance metrics and logging.",
-  //   tech: ["Next.js", "Node.js", "Express.js", "MongoDB", "Chart.js"],
-  //   githubUrl: "https://github.com/muzamilCodes/api-dashboard",
-  //   liveUrl: "https://apidashboard.demo",
-  //   image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop",
-  //   features: [
-  //     "Real-time API monitoring",
-  //     "Performance analytics",
-  //     "Error tracking & logging",
-  //     "Rate limiting visualization",
-  //     "Automated alerts",
-  //     "Historical data analysis"
-  //   ]
-  // },
-  // {
-  //   id: 6,
-  //   title: "HealthCare App",
-  //   description: "Healthcare appointment booking system",
-  //   longDescription: "A platform for patients to book appointments with doctors, view medical records, and receive health tips.",
-  //   tech: ["React", "Node.js", "MongoDB", "Express", "JWT", "Bootstrap"],
-  //   githubUrl: "https://github.com/muzamilCodes/healthcare-system",
-  //   liveUrl: "https://healthcare.demo",
-  //   image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&h=400&fit=crop",
-  //   features: [
-  //     "Doctor appointment booking",
-  //     "Patient medical records",
-  //     "Prescription management",
-  //     "Video consultation feature",
-  //     "Medicine reminder system",
-  //     "Health blog & tips"
-  //   ]
-  // }
-];  
+  }
+];
+  

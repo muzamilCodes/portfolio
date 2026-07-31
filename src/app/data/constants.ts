@@ -16,7 +16,7 @@ export const SOCIAL_LINKS = [
 export const CONTACT_INFO = {
   email: 'warmuzamil68@gmail.com',
   phone: '+91 9682645127',
-  location: 'Srinagar',
+  location: 'Handwara, Srinagar',
   github: 'https://github.com/muzamilCodes',
   linkedin: 'https://www.linkedin.com/in/muzamilCodes',
 };
