@@ -12,6 +12,24 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 6,
+    title: "StudyMaterial Platform",
+    description: "Premium smart learning platform providing class-wise educational materials, notes, and solved board papers.",
+    longDescription: "StudyMaterial is a next-generation smart learning platform designed for 10th, 11th, and 12th-grade students across Medical, Non-Medical, and Commerce streams. It delivers curated PDF study notes, solved previous year board papers, live interactive classes with expert faculty, and interactive quizzes for self-assessment. Featuring MongoDB database integration, the platform is presented in a premium glassmorphic visual style with a full dark mode experience.",
+    tech: ["Next.js", "React.js", "MongoDB", "Tailwind CSS", "TypeScript", "Framer Motion"],
+    githubUrl: "https://github.com/muzamilCodes/study-material-eight",
+    liveUrl: "https://study-meterial-eight.vercel.app/",
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=400&fit=crop",
+    features: [
+      "Class-wise structured notes (10th, 11th, & 12th)",
+      "Solved 10-year board examination papers",
+      "Interactive live streaming classes with faculty",
+      "Self-assessment quizzes with instant scoring",
+      "Premium glassmorphic user interface & dark mode",
+      "MongoDB database integration for live content dynamic delivery"
+    ]
+  },
+  {
     id: 1,
     title: "Quick Services Marketplace",
     description: "On-demand local services platform connecting clients with service providers.",
