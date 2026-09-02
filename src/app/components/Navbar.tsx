@@ -55,7 +55,7 @@ export default function Navbar() {
             </div>
             <div className="flex flex-col">
               <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                Muzamil War
+                War Muzamil
               </span>
               <span className="text-xs text-gray-500 dark:text-gray-400 font-medium tracking-wider uppercase">
                 Portfolio

@@ -8,9 +8,9 @@ import DynamicBackground3D from '@/app/components/3d/DynamicBackground3D'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Muzamil War | Full Stack & 3D Web Engineer',
-  description: 'Professional portfolio of Muzamil War, showcasing React, Next.js, Three.js, .NET Core, Express.js and TypeScript projects.',
-  keywords: ['Muzamil War', 'Full Stack Developer', 'Three.js Developer', 'React 3D', 'Next.js Developer', '.NET Developer', 'Kashmir Developer'],
+  title: 'War Muzamil | MERN Stack & Full Stack Developer',
+  description: 'Professional portfolio of War Muzamil, showcasing React.js, Next.js, Node.js, Express.js, MongoDB, .NET Core and TypeScript projects.',
+  keywords: ['War Muzamil', 'Muzamil War', 'MERN Stack Developer', 'Full Stack Developer', 'React Developer', 'Next.js Developer', 'Node.js Developer', 'Kashmir Developer'],
 }
 
 export default function RootLayout({

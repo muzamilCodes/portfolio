@@ -63,7 +63,7 @@ export default function About() {
                 <div className="relative w-full h-full">
                   <Image
                     src={profileImageUrl}
-                    alt="Muzamil War"
+                    alt="War Muzamil"
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 280px, 340px"
@@ -76,8 +76,8 @@ export default function About() {
                   
                   {/* Floating badge inside image */}
                   <div className="absolute bottom-4 left-4 right-4 p-3 bg-white/10 dark:bg-slate-900/60 backdrop-blur-md border border-white/10 rounded-xl">
-                    <p className="text-sm font-bold text-white">Muzamil War</p>
-                    <p className="text-xs text-secondary font-medium">Full Stack & 3D Web Engineer</p>
+                    <p className="text-sm font-bold text-white">War Muzamil</p>
+                    <p className="text-xs text-secondary font-medium">MERN Stack / Full Stack Developer</p>
                   </div>
                 </div>
               </TiltCard3D>
@@ -88,7 +88,7 @@ export default function About() {
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute -top-3 -left-3 px-3 py-1.5 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-card-border rounded-xl shadow-xl text-xs font-bold text-gray-700 dark:text-gray-300"
               >
-                ⚛️ React
+                ⚛️ React.js
               </motion.div>
 
               <motion.div
@@ -96,7 +96,7 @@ export default function About() {
                 transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute top-1/2 -right-6 px-3 py-1.5 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-card-border rounded-xl shadow-xl text-xs font-bold text-gray-700 dark:text-gray-300"
               >
-                🪐 Three.js
+                🍃 MongoDB
               </motion.div>
             </div>
           </motion.div>
@@ -116,10 +116,10 @@ export default function About() {
               
               <div className="space-y-4 text-gray-600 dark:text-gray-400 text-base md:text-lg leading-relaxed">
                 <p>
-                  I am a passionate <strong className="text-gray-800 dark:text-white">Full Stack & 3D Web Developer</strong> who loves turning ideas into high-quality code. Specializing in modern javascript environments, I create fast and secure web applications using React, Next.js, Three.js, Express, and Microsoft .NET platforms.
+                  I am a motivated <strong className="text-gray-800 dark:text-white">MERN Stack / Full Stack Developer</strong> with 1 year of practical experience building full-stack web applications using MongoDB, Express.js, React.js, and Node.js.
                 </p>
                 <p>
-                  I believe in writing clean, modular, and self-documenting code. Over the past year, I have built web applications ranging from dynamic landing pages to complete e-commerce platforms, always aiming for accessibility, SEO best practices, and elegant 3D UI interfaces.
+                  Skilled in REST APIs, authentication, responsive frontend development, database integration, and deployment. I focus on writing clean, maintainable code, implementing modular architectures, and building high-performance web solutions.
                 </p>
               </div>
             </div>

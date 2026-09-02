@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiGithub, FiLinkedin, FiTwitter, FiDownload, FiArrowRight, FiTerminal, FiBox, FiCode, FiCpu } from 'react-icons/fi';
+import { motion } from 'framer-motion';
+import { FiGithub, FiLinkedin, FiTwitter, FiDownload, FiArrowRight, FiTerminal, FiCode } from 'react-icons/fi';
 import { TypeAnimation } from 'react-type-animation';
 import Image from 'next/image';
 
@@ -11,18 +10,7 @@ const HeroConstellation3D = dynamic(() => import('./3d/HeroConstellation3D'), {
   ssr: false,
 });
 
-const Hero3D = dynamic(() => import('./3d/Hero3D'), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-full min-h-[360px] flex flex-col items-center justify-center gap-3">
-      <div className="w-12 h-12 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
-      <span className="text-xs font-mono text-primary/70 animate-pulse">Initializing 3D Canvas...</span>
-    </div>
-  ),
-});
-
 export default function Hero() {
-  const [activeTab, setActiveTab] = useState<'3d' | 'code'>('3d');
 
   return (
     <section id="home" className="min-h-[calc(100vh-80px)] flex items-center justify-center relative overflow-hidden py-12 md:py-20 bg-background transition-colors duration-300">
@@ -49,7 +37,7 @@ export default function Hero() {
                 <div className="relative w-full h-full rounded-full overflow-hidden">
                   <Image
                     src="/muzamil.jpg"
-                    alt="Muzamil War Profile"
+                    alt="War Muzamil Profile"
                     fill
                     className="object-cover"
                     unoptimized
@@ -76,7 +64,7 @@ export default function Hero() {
             >
               Hi, I&apos;m{' '}
               <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-                Muzamil War
+                War Muzamil
               </span>
             </motion.h1>
 
@@ -88,15 +76,15 @@ export default function Hero() {
             >
               <TypeAnimation
                 sequence={[
+                  'MERN Stack Developer',
+                  2000,
                   'Full Stack Developer',
                   2000,
-                  'React & Next.js Expert',
+                  'React.js & Next.js Expert',
                   2000,
-                  'Three.js & 3D Web Creator',
+                  'Node.js & Express.js Specialist',
                   2000,
-                  '.NET Core Developer',
-                  2000,
-                  'Express.js Backend Specialist',
+                  'MongoDB & PostgreSQL Specialist',
                   2000,
                 ]}
                 wrapper="span"
@@ -111,7 +99,7 @@ export default function Hero() {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-xl leading-relaxed"
             >
-              I build interactive, scalable, and high-performance digital experiences from Srinagar, Kashmir. Specializing in high-fidelity React/Next.js frontend architectures, 3D WebGL interfaces, and robust backend engineering.
+              Motivated Full Stack Developer with 1 year of practical experience building full-stack web applications using MongoDB, Express.js, React.js, and Node.js. Skilled in REST APIs, authentication, responsive frontend development, and deployment.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -174,7 +162,7 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right Column - Interactive 3D Cyber Card / Code Window */}
+          {/* Right Column - Code Window Card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -184,118 +172,68 @@ export default function Hero() {
             {/* Soft backdrop glow behind card */}
             <div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-3xl blur-xl opacity-30 dark:opacity-40 animate-pulse-slow" />
             
-            <div className="relative glass-panel bg-slate-900/90 dark:bg-slate-950/85 backdrop-blur-2xl rounded-3xl shadow-2xl overflow-hidden border border-white/10 text-xs sm:text-sm font-mono text-gray-300">
-              {/* Window Header with Tab Switchers */}
-              <div className="flex items-center justify-between px-4 py-3 bg-slate-950/80 border-b border-white/10">
+            <div className="relative glass-panel bg-slate-900/95 dark:bg-slate-950/90 backdrop-blur-2xl rounded-3xl shadow-2xl overflow-hidden border border-white/10 text-xs sm:text-sm font-mono text-gray-300">
+              {/* Window Header */}
+              <div className="flex items-center justify-between px-5 py-3.5 bg-slate-950/80 border-b border-white/10">
                 <div className="flex space-x-2">
                   <div className="w-3 h-3 rounded-full bg-rose-500/80" />
                   <div className="w-3 h-3 rounded-full bg-amber-500/80" />
                   <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
                 </div>
 
-                {/* Switcher Buttons */}
-                <div className="flex items-center bg-slate-800/80 p-0.5 rounded-lg border border-white/10 text-[11px]">
-                  <button
-                    onClick={() => setActiveTab('3d')}
-                    className={`flex items-center gap-1.5 px-3 py-1 rounded-md transition-all font-sans font-medium ${
-                      activeTab === '3d'
-                        ? 'bg-primary text-white shadow-sm'
-                        : 'text-gray-400 hover:text-white'
-                    }`}
-                  >
-                    <FiBox className="text-xs" />
-                    <span>3D Cyber Orb</span>
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('code')}
-                    className={`flex items-center gap-1.5 px-3 py-1 rounded-md transition-all font-sans font-medium ${
-                      activeTab === 'code'
-                        ? 'bg-primary text-white shadow-sm'
-                        : 'text-gray-400 hover:text-white'
-                    }`}
-                  >
-                    <FiCode className="text-xs" />
-                    <span>profile.ts</span>
-                  </button>
+                <div className="flex items-center gap-1.5 px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs font-mono text-gray-400">
+                  <FiCode className="text-primary text-xs" />
+                  <span>profile.ts</span>
                 </div>
 
                 <div className="flex items-center gap-1.5 text-[10px] text-emerald-400">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                  <span className="hidden sm:inline font-sans font-medium">LIVE</span>
+                  <span className="hidden sm:inline font-sans font-medium">ONLINE</span>
                 </div>
               </div>
 
-              {/* Window Body */}
-              <div className="relative min-h-[360px] sm:min-h-[400px] flex flex-col justify-center">
-                <AnimatePresence mode="wait">
-                  {activeTab === '3d' ? (
-                    <motion.div
-                      key="3d-tab"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="relative w-full h-full flex flex-col items-center justify-center p-2"
-                    >
-                      {/* Top Overlay Badge */}
-                      <div className="absolute top-3 left-4 z-10 flex items-center gap-2 px-2.5 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-sky-300 backdrop-blur-md">
-                        <FiCpu className="text-xs" />
-                        <span>Interactive Three.js & Fiber</span>
-                      </div>
-
-                      {/* 3D Canvas */}
-                      <div className="w-full h-[340px] sm:h-[370px]">
-                        <Hero3D />
-                      </div>
-
-                      {/* Bottom Hint */}
-                      <div className="absolute bottom-3 text-center text-[10px] text-gray-400/80 font-sans select-none pointer-events-none">
-                        ✦ Move your mouse / touch to interact with 3D Core ✦
-                      </div>
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="code-tab"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="p-6 select-none leading-relaxed overflow-x-auto whitespace-pre font-mono text-xs sm:text-sm"
-                    >
-                      <span className="text-purple-400">const</span>{' '}
-                      <span className="text-blue-400">developer</span> = &#123;
-                      <br />
-                      &nbsp;&nbsp;<span className="text-cyan-400">name</span>:{' '}
-                      <span className="text-amber-300">&apos;Muzamil War&apos;</span>,
-                      <br />
-                      &nbsp;&nbsp;<span className="text-cyan-400">role</span>:{' '}
-                      <span className="text-amber-300">&apos;Full Stack & 3D Web Engineer&apos;</span>,
-                      <br />
-                      &nbsp;&nbsp;<span className="text-cyan-400">location</span>:{' '}
-                      <span className="text-amber-300">&apos;Srinagar, Kashmir&apos;</span>,
-                      <br />
-                      &nbsp;&nbsp;<span className="text-cyan-400">technologies</span>: [
-                      <br />
-                      &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">&apos;React&apos;</span>,{' '}
-                      <span className="text-amber-300">&apos;Next.js&apos;</span>,{' '}
-                      <span className="text-amber-300">&apos;Three.js / R3F&apos;</span>,
-                      <br />
-                      &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">&apos;TypeScript&apos;</span>,{' '}
-                      <span className="text-amber-300">&apos;Node.js&apos;</span>,{' '}
-                      <span className="text-amber-300">&apos;.NET Core&apos;</span>
-                      <br />
-                      &nbsp;&nbsp;],
-                      <br />
-                      &nbsp;&nbsp;<span className="text-cyan-400">specialty</span>:{' '}
-                      <span className="text-amber-300">&apos;Modern 3D & Responsive UI/UX&apos;</span>,
-                      <br />
-                      &nbsp;&nbsp;<span className="text-cyan-400">status</span>:{' '}
-                      <span className="text-emerald-400">&apos;Ready to build something extraordinary&apos;</span>
-                      <br />
-                      &#125;;
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+              {/* Code Panel Body */}
+              <div className="p-6 select-none leading-relaxed overflow-x-auto whitespace-pre font-mono text-xs sm:text-sm">
+                <span className="text-purple-400">const</span>{' '}
+                <span className="text-blue-400">developer</span> = &#123;
+                <br />
+                &nbsp;&nbsp;<span className="text-cyan-400">name</span>:{' '}
+                <span className="text-amber-300">&apos;War Muzamil&apos;</span>,
+                <br />
+                &nbsp;&nbsp;<span className="text-cyan-400">role</span>:{' '}
+                <span className="text-amber-300">&apos;MERN Stack / Full Stack Developer&apos;</span>,
+                <br />
+                &nbsp;&nbsp;<span className="text-cyan-400">location</span>:{' '}
+                <span className="text-amber-300">&apos;Handwara, Kupwara, India&apos;</span>,
+                <br />
+                &nbsp;&nbsp;<span className="text-cyan-400">frontend</span>: [
+                <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">&apos;React.js&apos;</span>,{' '}
+                <span className="text-amber-300">&apos;Next.js&apos;</span>,{' '}
+                <span className="text-amber-300">&apos;TypeScript&apos;</span>,{' '}
+                <span className="text-amber-300">&apos;Tailwind CSS&apos;</span>
+                <br />
+                &nbsp;&nbsp;],
+                <br />
+                &nbsp;&nbsp;<span className="text-cyan-400">backend</span>: [
+                <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">&apos;Node.js&apos;</span>,{' '}
+                <span className="text-amber-300">&apos;Express.js&apos;</span>,{' '}
+                <span className="text-amber-300">&apos;REST APIs&apos;</span>
+                <br />
+                &nbsp;&nbsp;],
+                <br />
+                &nbsp;&nbsp;<span className="text-cyan-400">database</span>: [
+                <br />
+                &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">&apos;MongoDB&apos;</span>,{' '}
+                <span className="text-amber-300">&apos;PostgreSQL&apos;</span>
+                <br />
+                &nbsp;&nbsp;],
+                <br />
+                &nbsp;&nbsp;<span className="text-cyan-400">status</span>:{' '}
+                <span className="text-emerald-400">&apos;Available for Hire&apos;</span>
+                <br />
+                &#125;;
               </div>
             </div>
           </motion.div>

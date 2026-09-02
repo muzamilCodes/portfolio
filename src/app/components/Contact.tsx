@@ -33,8 +33,8 @@ export default function Contact() {
     {
       icon: <FiMapPin className="text-lg" />,
       title: "Location",
-      value: "Handwara, Srinagar",
-      link: "https://maps.google.com/?q=Handwara+India",
+      value: "Handwara, Kupwara, India",
+      link: "https://maps.google.com/?q=Handwara+Kupwara+India",
       actionText: "Find on Google Maps"
     }
   ];
