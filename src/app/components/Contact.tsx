@@ -1,8 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMail, FiMapPin, FiPhone, FiSend, FiGithub, FiLinkedin, FiTwitter, FiCheckCircle, FiAlertCircle } from 'react-icons/fi';
+import TiltCard3D from './3d/TiltCard3D';
+
+const Contact3D = dynamic(() => import('./3d/Contact3D'), {
+  ssr: false,
+  loading: () => <div className="h-64 flex items-center justify-center text-xs text-gray-500">Loading 3D Beacon...</div>,
+});
 
 export default function Contact() {
   const [formState, setFormState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -102,53 +109,58 @@ export default function Contact() {
           </h2>
           <div className="h-1.5 w-20 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mb-6" />
           <p className="text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
-            Have a project in mind, want to discuss a job role, or just want to say hi? Let&apos;s connect.
+            Have a project in mind, want to discuss a 3D web experience or full-stack role, or just want to say hi? Let&apos;s connect.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-12 gap-12 items-start">
+        <div className="grid lg:grid-cols-12 gap-12 items-center">
           
-          {/* Left: Contact Info */}
+          {/* Left: Contact Info + 3D Holographic Radar */}
           <motion.div
             initial={{ opacity: 0, x: -25 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="lg:col-span-5 space-y-6 text-left"
           >
-            <h3 className="text-2xl font-bold tracking-tight mb-4">
-              Contact Information
-            </h3>
+            {/* 3D Radar Visualizer */}
+            <div className="relative rounded-3xl glass-panel border border-card-border p-4 overflow-hidden bg-slate-950/40">
+              <div className="absolute top-3 left-4 z-10 flex items-center gap-2 text-[11px] font-mono text-cyan-400">
+                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                <span>Holographic Transmission Node</span>
+              </div>
+              <Contact3D />
+            </div>
             
             <div className="space-y-4">
-              {contactInfo.map((info, idx) => (
-                <motion.a
-                  key={info.title}
-                  href={info.link}
-                  whileHover={{ x: 5 }}
-                  className="flex items-center space-x-4 p-4 bg-white/40 dark:bg-slate-900/40 glass-panel border border-card-border rounded-xl shadow-sm hover:shadow-md transition-all group"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div className="p-3 bg-primary/5 dark:bg-primary/10 text-primary border border-primary/10 rounded-lg group-hover:scale-105 transition-transform duration-350">
-                    {info.icon}
-                  </div>
-                  <div className="flex-grow">
-                    <h4 className="font-bold text-sm text-gray-800 dark:text-gray-200">
-                      {info.title}
-                    </h4>
-                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                      {info.value}
-                    </p>
-                    <span className="text-[10px] text-primary font-bold uppercase tracking-wider mt-1 block">
-                      {info.actionText} →
-                    </span>
-                  </div>
-                </motion.a>
+              {contactInfo.map((info) => (
+                <TiltCard3D key={info.title} depth={10}>
+                  <motion.a
+                    href={info.link}
+                    className="flex items-center space-x-4 p-4 bg-white/40 dark:bg-slate-900/40 glass-panel border border-card-border rounded-2xl shadow-sm hover:shadow-lg transition-all group"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="p-3 bg-primary/10 text-primary border border-primary/20 rounded-xl group-hover:scale-110 transition-transform duration-350 shadow-sm">
+                      {info.icon}
+                    </div>
+                    <div className="flex-grow">
+                      <h4 className="font-bold text-sm text-gray-800 dark:text-gray-200">
+                        {info.title}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                        {info.value}
+                      </p>
+                      <span className="text-[10px] text-primary font-bold uppercase tracking-wider mt-1 block">
+                        {info.actionText} →
+                      </span>
+                    </div>
+                  </motion.a>
+                </TiltCard3D>
               ))}
             </div>
 
             {/* Social Grid */}
-            <div className="pt-6">
+            <div className="pt-2">
               <h4 className="text-sm font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-4">
                 Follow My Developments
               </h4>
@@ -159,8 +171,8 @@ export default function Contact() {
                     href={social.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ y: -3, scale: 1.05 }}
-                    className="p-3 border border-card-border bg-white/60 dark:bg-slate-900/60 rounded-xl text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors flex items-center justify-center hover:shadow-sm"
+                    whileHover={{ y: -3, scale: 1.1 }}
+                    className="p-3.5 border border-card-border bg-white/60 dark:bg-slate-900/60 rounded-2xl text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-all flex items-center justify-center hover:shadow-md"
                     aria-label={social.name}
                     title={social.name}
                   >
@@ -171,13 +183,14 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Right: Contact Form Card */}
+          {/* Right: Contact Form Card wrapped in TiltCard3D */}
           <motion.div
             initial={{ opacity: 0, x: 25 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-7 bg-white/40 dark:bg-slate-900/40 glass-panel border border-card-border rounded-2xl p-6 sm:p-8 shadow-sm relative min-h-[460px] flex flex-col justify-center"
+            className="lg:col-span-7"
           >
+            <TiltCard3D depth={8} glowColor="rgba(99, 102, 241, 0.15)" className="bg-white/40 dark:bg-slate-900/40 glass-panel border border-card-border rounded-3xl p-6 sm:p-8 shadow-xl relative min-h-[460px] flex flex-col justify-center">
             <AnimatePresence mode="wait">
               {formState === 'success' ? (
                 /* Success Card View */
@@ -329,6 +342,7 @@ export default function Contact() {
                 </motion.div>
               )}
             </AnimatePresence>
+            </TiltCard3D>
           </motion.div>
         </div>
 

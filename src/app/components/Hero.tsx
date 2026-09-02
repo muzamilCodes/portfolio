@@ -1,22 +1,24 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { FiGithub, FiLinkedin, FiTwitter, FiDownload, FiArrowRight, FiTerminal } from 'react-icons/fi';
+import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiGithub, FiLinkedin, FiTwitter, FiDownload, FiArrowRight, FiTerminal, FiBox, FiCode, FiCpu } from 'react-icons/fi';
 import { TypeAnimation } from 'react-type-animation';
 import Image from 'next/image';
 
+const Hero3D = dynamic(() => import('./3d/Hero3D'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full min-h-[360px] flex flex-col items-center justify-center gap-3">
+      <div className="w-12 h-12 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
+      <span className="text-xs font-mono text-primary/70 animate-pulse">Initializing 3D Canvas...</span>
+    </div>
+  ),
+});
+
 export default function Hero() {
-  const codeSnippet = `const developer = {
-  name: 'Muzamil War',
-  role: 'Full Stack Engineer',
-  location: 'Srinagar, Kashmir',
-  skills: [
-    'React', 'Next.js', 'TypeScript',
-    'Node.js', '.NET Core', 'PostgreSQL'
-  ],
-  passion: 'Building elegant, scalable web apps',
-  status: 'Ready to build something amazing'
-};`;
+  const [activeTab, setActiveTab] = useState<'3d' | 'code'>('3d');
 
   return (
     <section id="home" className="min-h-[calc(100vh-80px)] flex items-center justify-center relative overflow-hidden py-12 md:py-20 bg-background transition-colors duration-300">
@@ -24,7 +26,7 @@ export default function Hero() {
       <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] rounded-full bg-primary/10 dark:bg-primary/20 glow-blur -z-10 animate-pulse-slow" />
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-secondary/10 dark:bg-secondary/15 glow-blur -z-10 animate-pulse-slow" style={{ animationDelay: '2s' }} />
 
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
           {/* Left Column - Intro */}
@@ -83,6 +85,8 @@ export default function Hero() {
                   2000,
                   'React & Next.js Expert',
                   2000,
+                  'Three.js & 3D Web Creator',
+                  2000,
                   '.NET Core Developer',
                   2000,
                   'Express.js Backend Specialist',
@@ -100,7 +104,7 @@ export default function Hero() {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-xl leading-relaxed"
             >
-              I build scalable, modern web applications from Srinagar, Kashmir. Specializing in high-performance frontend interfaces with React/Next.js and robust backend services with Node.js and .NET.
+              I build interactive, scalable, and high-performance digital experiences from Srinagar, Kashmir. Specializing in high-fidelity React/Next.js frontend architectures, 3D WebGL interfaces, and robust backend engineering.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -124,11 +128,12 @@ export default function Hero() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 href="/resume.html"
-                download
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-6 py-3 border border-card-border bg-white/80 dark:bg-slate-900/80 text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary rounded-full font-semibold text-sm hover:shadow-md transition-all flex items-center gap-2"
               >
                 <FiDownload className="text-sm" />
-                <span>Get CV</span>
+                <span>View & Get CV</span>
               </motion.a>
             </motion.div>
 
@@ -162,7 +167,7 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right Column - Code Mockup Card */}
+          {/* Right Column - Interactive 3D Cyber Card / Code Window */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -170,53 +175,120 @@ export default function Hero() {
             className="lg:col-span-5 relative"
           >
             {/* Soft backdrop glow behind card */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-2xl blur opacity-30 dark:opacity-40" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-3xl blur-xl opacity-30 dark:opacity-40 animate-pulse-slow" />
             
-            <div className="relative glass-panel bg-slate-900/90 dark:bg-slate-950/80 rounded-2xl shadow-2xl overflow-hidden border border-white/10 text-xs sm:text-sm font-mono text-gray-300">
-              {/* Window Header */}
-              <div className="flex items-center justify-between px-4 py-3 bg-slate-950/80 border-b border-white/5">
+            <div className="relative glass-panel bg-slate-900/90 dark:bg-slate-950/85 backdrop-blur-2xl rounded-3xl shadow-2xl overflow-hidden border border-white/10 text-xs sm:text-sm font-mono text-gray-300">
+              {/* Window Header with Tab Switchers */}
+              <div className="flex items-center justify-between px-4 py-3 bg-slate-950/80 border-b border-white/10">
                 <div className="flex space-x-2">
                   <div className="w-3 h-3 rounded-full bg-rose-500/80" />
                   <div className="w-3 h-3 rounded-full bg-amber-500/80" />
                   <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
                 </div>
-                <span className="text-gray-500 text-xs select-none">profile.ts</span>
-                <span className="w-6" /> {/* Spacer */}
+
+                {/* Switcher Buttons */}
+                <div className="flex items-center bg-slate-800/80 p-0.5 rounded-lg border border-white/10 text-[11px]">
+                  <button
+                    onClick={() => setActiveTab('3d')}
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-md transition-all font-sans font-medium ${
+                      activeTab === '3d'
+                        ? 'bg-primary text-white shadow-sm'
+                        : 'text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    <FiBox className="text-xs" />
+                    <span>3D Cyber Orb</span>
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('code')}
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-md transition-all font-sans font-medium ${
+                      activeTab === 'code'
+                        ? 'bg-primary text-white shadow-sm'
+                        : 'text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    <FiCode className="text-xs" />
+                    <span>profile.ts</span>
+                  </button>
+                </div>
+
+                <div className="flex items-center gap-1.5 text-[10px] text-emerald-400">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                  <span className="hidden sm:inline font-sans font-medium">LIVE</span>
+                </div>
               </div>
 
-              {/* Code Panel */}
-              <div className="p-5 select-none leading-relaxed overflow-x-auto whitespace-pre">
-                <span className="text-purple-400">const</span>{' '}
-                <span className="text-blue-400">developer</span> = &#123;
-                <br />
-                &nbsp;&nbsp;<span className="text-cyan-400">name</span>:{' '}
-                <span className="text-amber-300">&apos;Muzamil War&apos;</span>,
-                <br />
-                &nbsp;&nbsp;<span className="text-cyan-400">role</span>:{' '}
-                <span className="text-amber-300">&apos;Full Stack Engineer&apos;</span>,
-                <br />
-                &nbsp;&nbsp;<span className="text-cyan-400">location</span>:{' '}
-                <span className="text-amber-300">&apos;Srinagar, Kashmir&apos;</span>,
-                <br />
-                &nbsp;&nbsp;<span className="text-cyan-400">skills</span>: [
-                <br />
-                &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">&apos;React&apos;</span>,{' '}
-                <span className="text-amber-300">&apos;Next.js&apos;</span>,{' '}
-                <span className="text-amber-300">&apos;TypeScript&apos;</span>,
-                <br />
-                &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">&apos;Node.js&apos;</span>,{' '}
-                <span className="text-amber-300">&apos;.NET Core&apos;</span>,{' '}
-                <span className="text-amber-300">&apos;PostgreSQL&apos;</span>
-                <br />
-                &nbsp;&nbsp;],
-                <br />
-                &nbsp;&nbsp;<span className="text-cyan-400">passion</span>:{' '}
-                <span className="text-amber-300">&apos;Building elegant web apps&apos;</span>,
-                <br />
-                &nbsp;&nbsp;<span className="text-cyan-400">status</span>:{' '}
-                <span className="text-amber-300">&apos;Open to build amazing things&apos;</span>
-                <br />
-                &#125;;
+              {/* Window Body */}
+              <div className="relative min-h-[360px] sm:min-h-[400px] flex flex-col justify-center">
+                <AnimatePresence mode="wait">
+                  {activeTab === '3d' ? (
+                    <motion.div
+                      key="3d-tab"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="relative w-full h-full flex flex-col items-center justify-center p-2"
+                    >
+                      {/* Top Overlay Badge */}
+                      <div className="absolute top-3 left-4 z-10 flex items-center gap-2 px-2.5 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-sky-300 backdrop-blur-md">
+                        <FiCpu className="text-xs" />
+                        <span>Interactive Three.js & Fiber</span>
+                      </div>
+
+                      {/* 3D Canvas */}
+                      <div className="w-full h-[340px] sm:h-[370px]">
+                        <Hero3D />
+                      </div>
+
+                      {/* Bottom Hint */}
+                      <div className="absolute bottom-3 text-center text-[10px] text-gray-400/80 font-sans select-none pointer-events-none">
+                        ✦ Move your mouse / touch to interact with 3D Core ✦
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="code-tab"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="p-6 select-none leading-relaxed overflow-x-auto whitespace-pre font-mono text-xs sm:text-sm"
+                    >
+                      <span className="text-purple-400">const</span>{' '}
+                      <span className="text-blue-400">developer</span> = &#123;
+                      <br />
+                      &nbsp;&nbsp;<span className="text-cyan-400">name</span>:{' '}
+                      <span className="text-amber-300">&apos;Muzamil War&apos;</span>,
+                      <br />
+                      &nbsp;&nbsp;<span className="text-cyan-400">role</span>:{' '}
+                      <span className="text-amber-300">&apos;Full Stack & 3D Web Engineer&apos;</span>,
+                      <br />
+                      &nbsp;&nbsp;<span className="text-cyan-400">location</span>:{' '}
+                      <span className="text-amber-300">&apos;Srinagar, Kashmir&apos;</span>,
+                      <br />
+                      &nbsp;&nbsp;<span className="text-cyan-400">technologies</span>: [
+                      <br />
+                      &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">&apos;React&apos;</span>,{' '}
+                      <span className="text-amber-300">&apos;Next.js&apos;</span>,{' '}
+                      <span className="text-amber-300">&apos;Three.js / R3F&apos;</span>,
+                      <br />
+                      &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-amber-300">&apos;TypeScript&apos;</span>,{' '}
+                      <span className="text-amber-300">&apos;Node.js&apos;</span>,{' '}
+                      <span className="text-amber-300">&apos;.NET Core&apos;</span>
+                      <br />
+                      &nbsp;&nbsp;],
+                      <br />
+                      &nbsp;&nbsp;<span className="text-cyan-400">specialty</span>:{' '}
+                      <span className="text-amber-300">&apos;Modern 3D & Responsive UI/UX&apos;</span>,
+                      <br />
+                      &nbsp;&nbsp;<span className="text-cyan-400">status</span>:{' '}
+                      <span className="text-emerald-400">&apos;Ready to build something extraordinary&apos;</span>
+                      <br />
+                      &#125;;
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
           </motion.div>

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { FiAward, FiBriefcase, FiUsers, FiCode, FiCalendar, FiBookOpen } from 'react-icons/fi';
 import Image from 'next/image';
+import TiltCard3D from './3d/TiltCard3D';
 
 export default function About() {
   const stats = [
@@ -46,7 +47,7 @@ export default function About() {
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
-          {/* Left Column: Image with gradient background frame */}
+          {/* Left Column: Image with 3D Tilt Card */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -55,45 +56,47 @@ export default function About() {
           >
             <div className="relative w-[280px] h-[280px] sm:w-[340px] sm:h-[340px]">
               {/* Offset glowing background box */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary to-accent rounded-3xl rotate-6 scale-95 opacity-20 dark:opacity-35 blur-sm" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary to-accent rounded-3xl rotate-6 scale-95 opacity-25 dark:opacity-40 blur-md" />
               
-              {/* Picture frame */}
-              <div className="relative w-full h-full rounded-2xl overflow-hidden glass-panel border-2 border-card-border shadow-2xl">
-                <Image
-                  src={profileImageUrl}
-                  alt="Muzamil War"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 280px, 340px"
-                  unoptimized
-                  priority
-                />
-                
-                {/* Visual Glass overlays on image */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
-                
-                {/* Floating badge inside image */}
-                <div className="absolute bottom-4 left-4 right-4 p-3 bg-white/10 dark:bg-slate-900/40 backdrop-blur-md border border-white/10 rounded-xl">
-                  <p className="text-sm font-bold text-white">Muzamil War</p>
-                  <p className="text-xs text-secondary font-medium">Full Stack Engineer</p>
+              {/* 3D Tilt Picture frame */}
+              <TiltCard3D depth={15} glowColor="rgba(99, 102, 241, 0.3)" className="w-full h-full rounded-2xl overflow-hidden glass-panel border-2 border-card-border shadow-2xl">
+                <div className="relative w-full h-full">
+                  <Image
+                    src={profileImageUrl}
+                    alt="Muzamil War"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 280px, 340px"
+                    unoptimized
+                    priority
+                  />
+                  
+                  {/* Visual Glass overlays on image */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+                  
+                  {/* Floating badge inside image */}
+                  <div className="absolute bottom-4 left-4 right-4 p-3 bg-white/10 dark:bg-slate-900/60 backdrop-blur-md border border-white/10 rounded-xl">
+                    <p className="text-sm font-bold text-white">Muzamil War</p>
+                    <p className="text-xs text-secondary font-medium">Full Stack & 3D Web Engineer</p>
+                  </div>
                 </div>
-              </div>
+              </TiltCard3D>
 
               {/* Floating tech nodes */}
               <motion.div
-                animate={{ y: [0, -6, 0] }}
+                animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-3 -left-3 px-3 py-1.5 bg-white dark:bg-slate-900 border border-card-border rounded-xl shadow-lg text-xs font-bold text-gray-700 dark:text-gray-300"
+                className="absolute -top-3 -left-3 px-3 py-1.5 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-card-border rounded-xl shadow-xl text-xs font-bold text-gray-700 dark:text-gray-300"
               >
                 ⚛️ React
               </motion.div>
 
               <motion.div
-                animate={{ y: [0, 6, 0] }}
+                animate={{ y: [0, 8, 0] }}
                 transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-1/2 -right-6 px-3 py-1.5 bg-white dark:bg-slate-900 border border-card-border rounded-xl shadow-lg text-xs font-bold text-gray-700 dark:text-gray-300"
+                className="absolute top-1/2 -right-6 px-3 py-1.5 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-card-border rounded-xl shadow-xl text-xs font-bold text-gray-700 dark:text-gray-300"
               >
-                ⚡ Next.js
+                🪐 Three.js
               </motion.div>
             </div>
           </motion.div>
@@ -113,20 +116,20 @@ export default function About() {
               
               <div className="space-y-4 text-gray-600 dark:text-gray-400 text-base md:text-lg leading-relaxed">
                 <p>
-                  I am a passionate <strong className="text-gray-800 dark:text-white">Full Stack Developer</strong> who loves turning ideas into high-quality code. Specializing in modern javascript environments, I create fast and secure web applications using React, Next.js, Express, and Microsoft .NET platforms.
+                  I am a passionate <strong className="text-gray-800 dark:text-white">Full Stack & 3D Web Developer</strong> who loves turning ideas into high-quality code. Specializing in modern javascript environments, I create fast and secure web applications using React, Next.js, Three.js, Express, and Microsoft .NET platforms.
                 </p>
                 <p>
-                  I believe in writing clean, modular, and self-documenting code. Over the past year, I have built web applications ranging from dynamic landing pages to complete e-commerce platforms, always aiming for accessibility, SEO best practices, and elegant UI interfaces.
+                  I believe in writing clean, modular, and self-documenting code. Over the past year, I have built web applications ranging from dynamic landing pages to complete e-commerce platforms, always aiming for accessibility, SEO best practices, and elegant 3D UI interfaces.
                 </p>
               </div>
             </div>
 
-            {/* Premium Stats Grid */}
+            {/* Premium 3D Tilt Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {stats.map((stat, i) => (
-                <motion.div
+              {stats.map((stat) => (
+                <TiltCard3D
                   key={stat.label}
-                  whileHover={{ y: -5 }}
+                  depth={12}
                   className="p-4 rounded-2xl glass-panel border border-card-border text-center shadow-md relative overflow-hidden group"
                 >
                   {/* Subtle top indicator hover lines */}
@@ -137,7 +140,7 @@ export default function About() {
                   </div>
                   <h3 className="text-2xl font-bold tracking-tight mb-1">{stat.value}</h3>
                   <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{stat.label}</p>
-                </motion.div>
+                </TiltCard3D>
               ))}
             </div>
           </motion.div>

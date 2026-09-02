@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { 
   FaReact, FaNodeJs, FaGitAlt, 
@@ -12,6 +13,12 @@ import {
   SiCloudinary,
   SiGithub
 } from 'react-icons/si';
+import TiltCard3D from './3d/TiltCard3D';
+
+const Skills3D = dynamic(() => import('./3d/Skills3D'), {
+  ssr: false,
+  loading: () => <div className="h-64 sm:h-80 flex items-center justify-center text-xs text-gray-500">Loading 3D Visualizer...</div>,
+});
 
 const skills = [
   {
@@ -75,6 +82,37 @@ export default function Skills() {
           </p>
         </motion.div>
 
+        {/* 3D Interactive Visualizer Banner */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="mb-14 relative overflow-hidden rounded-3xl glass-panel border border-card-border p-6 sm:p-8 bg-gradient-to-b from-primary/5 via-slate-900/40 to-slate-950/60"
+        >
+          <div className="grid lg:grid-cols-12 gap-6 items-center">
+            <div className="lg:col-span-5 text-left space-y-4">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-secondary/10 border border-secondary/20 text-secondary text-xs font-semibold uppercase tracking-wider">
+                <span>✦ 3D Architecture ✦</span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                Interactive <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Tech Cosmos</span>
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                Seamlessly uniting high-performance backend microservices with real-time 3D WebGL graphics and modern responsive frontends.
+              </p>
+              <div className="flex flex-wrap gap-2 text-xs font-mono pt-2">
+                <span className="px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg text-primary font-bold">Three.js</span>
+                <span className="px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg text-secondary font-bold">React Three Fiber</span>
+                <span className="px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg text-accent font-bold">GLSL Shaders</span>
+              </div>
+            </div>
+            
+            <div className="lg:col-span-7 flex justify-center items-center">
+              <Skills3D />
+            </div>
+          </div>
+        </motion.div>
+
         {/* Categories Grid */}
         <div className="grid md:grid-cols-3 gap-8">
           {skills.map((skillCategory, idx) => (
@@ -84,45 +122,51 @@ export default function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="glass-panel border border-card-border rounded-2xl p-6 shadow-md relative overflow-hidden group"
+              className="h-full"
             >
-              {/* Subtle visual top light */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-secondary opacity-20 group-hover:opacity-100 transition-opacity duration-350" />
+              <TiltCard3D
+                depth={12}
+                glowColor="rgba(99, 102, 241, 0.2)"
+                className="glass-panel border border-card-border rounded-3xl p-6 shadow-md relative overflow-hidden group h-full"
+              >
+                {/* Subtle visual top light */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-secondary opacity-20 group-hover:opacity-100 transition-opacity duration-350" />
 
-              <h3 className="text-xl font-bold mb-8 text-left border-b border-card-border pb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                {skillCategory.category}
-              </h3>
-              
-              <div className="space-y-6">
-                {skillCategory.items.map((skill) => (
-                  <div key={skill.name} className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2.5">
-                        <div className={`text-xl ${skill.color} p-1 bg-gray-500/5 rounded-md`}>
-                          {skill.icon}
+                <h3 className="text-xl font-bold mb-8 text-left border-b border-card-border pb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  {skillCategory.category}
+                </h3>
+                
+                <div className="space-y-6">
+                  {skillCategory.items.map((skill) => (
+                    <div key={skill.name} className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2.5">
+                          <div className={`text-xl ${skill.color} p-1 bg-gray-500/5 rounded-md`}>
+                            {skill.icon}
+                          </div>
+                          <span className="font-medium text-sm text-gray-800 dark:text-gray-200">
+                            {skill.name}
+                          </span>
                         </div>
-                        <span className="font-medium text-sm text-gray-800 dark:text-gray-200">
-                          {skill.name}
+                        <span className="text-xs font-bold text-gray-500 dark:text-gray-400">
+                          {skill.level}%
                         </span>
                       </div>
-                      <span className="text-xs font-bold text-gray-500 dark:text-gray-400">
-                        {skill.level}%
-                      </span>
+                      
+                      {/* Progress Bar Container */}
+                      <div className="h-2 bg-gray-200/60 dark:bg-slate-800/80 rounded-full overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${skill.level}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1.2, ease: "easeOut" }}
+                          className={`h-full bg-gradient-to-r ${skill.barColor}`}
+                        />
+                      </div>
                     </div>
-                    
-                    {/* Progress Bar Container */}
-                    <div className="h-2 bg-gray-200/60 dark:bg-slate-800/80 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${skill.level}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1.2, ease: "easeOut" }}
-                        className={`h-full bg-gradient-to-r ${skill.barColor}`}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </TiltCard3D>
             </motion.div>
           ))}
         </div>
@@ -140,18 +184,16 @@ export default function Skills() {
           
           <div className="flex flex-wrap justify-center gap-4">
             {tools.map((tech, index) => (
-              <motion.div
-                key={index}
-                whileHover={{ y: -4, scale: 1.02 }}
-                className={`flex flex-col items-center justify-center p-4 bg-white/40 dark:bg-slate-900/40 glass-panel border border-card-border rounded-xl w-[100px] h-[100px] shadow-sm hover:shadow-md transition-all duration-300 ${tech.glow}`}
-              >
-                <div className="text-3xl mb-2 flex items-center justify-center h-10 w-10">
-                  {tech.icon}
+              <TiltCard3D key={index} depth={20} className="w-[105px] h-[105px] rounded-2xl">
+                <div className={`flex flex-col items-center justify-center p-4 bg-white/40 dark:bg-slate-900/40 glass-panel border border-card-border rounded-2xl w-full h-full shadow-sm hover:shadow-lg transition-all duration-300 ${tech.glow}`}>
+                  <div className="text-3xl mb-2 flex items-center justify-center h-10 w-10">
+                    {tech.icon}
+                  </div>
+                  <span className="font-semibold text-[11px] text-gray-500 dark:text-gray-400 tracking-wide text-center">
+                    {tech.name}
+                  </span>
                 </div>
-                <span className="font-semibold text-[11px] text-gray-500 dark:text-gray-400 tracking-wide text-center">
-                  {tech.name}
-                </span>
-              </motion.div>
+              </TiltCard3D>
             ))}
           </div>
         </motion.div>

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiGithub, FiExternalLink, FiX, FiChevronRight, FiFolder } from 'react-icons/fi';
 import { projects, Project } from '@/app/data/projects';
 import Image from 'next/image';
+import TiltCard3D from './3d/TiltCard3D';
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -78,94 +79,100 @@ export default function Projects() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3, delay: idx * 0.05 }}
-                className="group flex flex-col h-full bg-white/40 dark:bg-slate-900/40 glass-panel border border-card-border rounded-2xl overflow-hidden shadow-sm hover:shadow-lg hover:border-primary/20 hover:-translate-y-2 transition-all duration-300"
+                className="h-full"
               >
-                {/* Image Cover container */}
-                <div className="relative h-48 w-full overflow-hidden border-b border-card-border">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                  
-                  {/* Subtle glass layer above image */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-                  
-                  {/* Floating folder overlay */}
-                  <div className="absolute top-4 left-4 p-2 bg-slate-900/60 backdrop-blur-md rounded-xl text-secondary border border-white/10">
-                    <FiFolder className="text-sm" />
-                  </div>
-                </div>
-
-                {/* Card Info Content */}
-                <div className="p-6 flex flex-col flex-grow text-left space-y-4">
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-bold text-gray-800 dark:text-white group-hover:text-primary transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">
-                      {project.description}
-                    </p>
-                  </div>
-
-                  {/* Primary Tech badges */}
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {project.tech.slice(0, 3).map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 py-1 bg-primary/5 dark:bg-primary/10 border border-primary/10 text-primary text-[10px] font-bold rounded"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                    {project.tech.length > 3 && (
-                      <span className="px-2 py-1 bg-gray-500/5 border border-gray-500/10 text-gray-500 text-[10px] font-bold rounded">
-                        +{project.tech.length - 3}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Flex grow spacer */}
-                  <div className="flex-grow" />
-
-                  {/* Card bottom actions */}
-                  <div className="flex items-center justify-between pt-4 border-t border-card-border select-none">
-                    <button
-                      onClick={() => setSelectedProject(project)}
-                      className="flex items-center text-xs font-bold text-primary hover:text-secondary group-hover:gap-1.5 transition-all"
-                    >
-                      <span>Explore Details</span>
-                      <FiChevronRight className="ml-0.5" />
-                    </button>
+                <TiltCard3D
+                  depth={15}
+                  glowColor="rgba(56, 189, 248, 0.25)"
+                  className="group flex flex-col h-full bg-white/40 dark:bg-slate-900/40 glass-panel border border-card-border rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:border-primary/40 transition-all duration-300"
+                >
+                  {/* Image Cover container */}
+                  <div className="relative h-48 w-full overflow-hidden border-b border-card-border">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
                     
-                    <div className="flex space-x-2">
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 border border-card-border bg-white/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-800 rounded-lg text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"
-                        title="GitHub Repository"
-                        aria-label="View on Github"
-                      >
-                        <FiGithub className="text-sm" />
-                      </a>
-                      {project.liveUrl && (
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2 border border-card-border bg-white/50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-800 rounded-lg text-gray-600 dark:text-gray-400 hover:text-secondary dark:hover:text-secondary transition-colors"
-                          title="Live Showcase"
-                          aria-label="View Live Showcase"
-                        >
-                          <FiExternalLink className="text-sm" />
-                        </a>
-                      )}
+                    {/* Subtle glass layer above image */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent" />
+                    
+                    {/* Floating folder overlay */}
+                    <div className="absolute top-4 left-4 p-2.5 bg-slate-900/70 backdrop-blur-md rounded-2xl text-secondary border border-white/15 shadow-lg">
+                      <FiFolder className="text-sm" />
                     </div>
                   </div>
-                </div>
+
+                  {/* Card Info Content */}
+                  <div className="p-6 flex flex-col flex-grow text-left space-y-4">
+                    <div className="space-y-2">
+                      <h3 className="text-xl font-bold text-gray-800 dark:text-white group-hover:text-primary transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">
+                        {project.description}
+                      </p>
+                    </div>
+
+                    {/* Primary Tech badges */}
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {project.tech.slice(0, 3).map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2.5 py-1 bg-primary/10 dark:bg-primary/20 border border-primary/20 text-primary text-[10px] font-bold rounded-lg"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {project.tech.length > 3 && (
+                        <span className="px-2 py-1 bg-gray-500/10 border border-gray-500/20 text-gray-500 text-[10px] font-bold rounded-lg">
+                          +{project.tech.length - 3}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Flex grow spacer */}
+                    <div className="flex-grow" />
+
+                    {/* Card bottom actions */}
+                    <div className="flex items-center justify-between pt-4 border-t border-card-border select-none">
+                      <button
+                        onClick={() => setSelectedProject(project)}
+                        className="flex items-center text-xs font-bold text-primary hover:text-secondary group-hover:gap-2 transition-all"
+                      >
+                        <span>Explore Details</span>
+                        <FiChevronRight className="ml-0.5" />
+                      </button>
+                      
+                      <div className="flex space-x-2">
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2.5 border border-card-border bg-white/50 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-800 rounded-xl text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-all shadow-sm"
+                          title="GitHub Repository"
+                          aria-label="View on Github"
+                        >
+                          <FiGithub className="text-sm" />
+                        </a>
+                        {project.liveUrl && (
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2.5 border border-card-border bg-white/50 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-800 rounded-xl text-gray-600 dark:text-gray-400 hover:text-secondary dark:hover:text-secondary transition-all shadow-sm"
+                            title="Live Showcase"
+                            aria-label="Live Demo"
+                          >
+                            <FiExternalLink className="text-sm" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </TiltCard3D>
               </motion.div>
             ))}
           </AnimatePresence>

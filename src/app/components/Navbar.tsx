@@ -101,11 +101,12 @@ export default function Navbar() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               href="/resume.html"
-              download
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-6 py-2.5 bg-gradient-to-r from-primary via-secondary to-accent hover:opacity-90 text-white rounded-full font-semibold text-sm shadow-md shadow-primary/20 flex items-center gap-2 transition-all duration-300"
             >
               <FiDownload className="text-sm" />
-              <span>Download CV</span>
+              <span>Resume / CV</span>
             </motion.a>
           </div>
 
@@ -152,12 +153,13 @@ export default function Navbar() {
               <div className="pt-2 border-t border-card-border">
                 <a
                   href="/resume.html"
-                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}
                   className="flex items-center justify-center space-x-2 w-full p-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl font-semibold shadow-md"
                 >
                   <FiDownload />
-                  <span>Download CV</span>
+                  <span>View & Download CV</span>
                 </a>
               </div>
             </motion.div>
