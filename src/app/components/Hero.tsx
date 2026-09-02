@@ -7,6 +7,10 @@ import { FiGithub, FiLinkedin, FiTwitter, FiDownload, FiArrowRight, FiTerminal, 
 import { TypeAnimation } from 'react-type-animation';
 import Image from 'next/image';
 
+const HeroConstellation3D = dynamic(() => import('./3d/HeroConstellation3D'), {
+  ssr: false,
+});
+
 const Hero3D = dynamic(() => import('./3d/Hero3D'), {
   ssr: false,
   loading: () => (
@@ -22,6 +26,9 @@ export default function Hero() {
 
   return (
     <section id="home" className="min-h-[calc(100vh-80px)] flex items-center justify-center relative overflow-hidden py-12 md:py-20 bg-background transition-colors duration-300">
+      {/* 3D Connected Constellation Network & Floating Cubes (Video Style) */}
+      <HeroConstellation3D />
+
       {/* Background Animated Ambient Lights */}
       <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] rounded-full bg-primary/10 dark:bg-primary/20 glow-blur -z-10 animate-pulse-slow" />
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-secondary/10 dark:bg-secondary/15 glow-blur -z-10 animate-pulse-slow" style={{ animationDelay: '2s' }} />

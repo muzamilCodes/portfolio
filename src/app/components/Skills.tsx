@@ -1,6 +1,5 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { 
   FaReact, FaNodeJs, FaGitAlt, 
@@ -14,11 +13,6 @@ import {
   SiGithub
 } from 'react-icons/si';
 import TiltCard3D from './3d/TiltCard3D';
-
-const Skills3D = dynamic(() => import('./3d/Skills3D'), {
-  ssr: false,
-  loading: () => <div className="h-64 sm:h-80 flex items-center justify-center text-xs text-gray-500">Loading 3D Visualizer...</div>,
-});
 
 const skills = [
   {
@@ -80,37 +74,6 @@ export default function Skills() {
           <p className="text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
             I utilize a modern toolbox of frameworks, languages, and testing libraries to engineer high-fidelity digital solutions.
           </p>
-        </motion.div>
-
-        {/* 3D Interactive Visualizer Banner */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="mb-14 relative overflow-hidden rounded-3xl glass-panel border border-card-border p-6 sm:p-8 bg-gradient-to-b from-primary/5 via-slate-900/40 to-slate-950/60"
-        >
-          <div className="grid lg:grid-cols-12 gap-6 items-center">
-            <div className="lg:col-span-5 text-left space-y-4">
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-secondary/10 border border-secondary/20 text-secondary text-xs font-semibold uppercase tracking-wider">
-                <span>✦ 3D Architecture ✦</span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-                Interactive <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Tech Cosmos</span>
-              </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                Seamlessly uniting high-performance backend microservices with real-time 3D WebGL graphics and modern responsive frontends.
-              </p>
-              <div className="flex flex-wrap gap-2 text-xs font-mono pt-2">
-                <span className="px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg text-primary font-bold">Three.js</span>
-                <span className="px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg text-secondary font-bold">React Three Fiber</span>
-                <span className="px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg text-accent font-bold">GLSL Shaders</span>
-              </div>
-            </div>
-            
-            <div className="lg:col-span-7 flex justify-center items-center">
-              <Skills3D />
-            </div>
-          </div>
         </motion.div>
 
         {/* Categories Grid */}
