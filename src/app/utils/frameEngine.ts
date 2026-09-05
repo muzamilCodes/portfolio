@@ -192,117 +192,88 @@ export function startFrameEngine(handles: FrameEngineHandles): () => void {
         const panX = Math.sin(time * 0.22) * 14 + mouseX * 20;
         const panY = Math.cos(time * 0.28) * 10 + mouseY * 14 - scrollFrac * 30;
 
-        // 1. AMBIENT BACKGROUND LAYER (fills entire screen with matching atmosphere, never leaving blank space)
-        const bgCoverScale = Math.max(cw / iw, ch / ih) * 1.08;
+        // 1. AMBIENT BACKGROUND LAYER (Fills entire screen edge-to-edge with matching photo colors)
+        const bgCoverScale = Math.max(cw / iw, ch / ih) * 1.06;
         const bgW = iw * bgCoverScale;
         const bgH = ih * bgCoverScale;
-        const bgX = (cw - bgW) / 2 + panX * 0.4;
-        const bgY = (ch - bgH) / 2 + panY * 0.4;
+        const bgX = (cw - bgW) / 2 + panX * 0.3;
+        const bgY = (ch - bgH) / 2 + panY * 0.3;
 
         ctx.save();
-        ctx.globalAlpha = 0.32;
+        ctx.globalAlpha = 0.55;
         if (ctx.filter) {
-          ctx.filter = 'blur(20px)';
+          ctx.filter = 'blur(16px)';
         }
         ctx.drawImage(img, bgX, bgY, bgW, bgH);
         ctx.restore();
 
-        // Dark tone film grading on ambient backdrop
-        ctx.fillStyle = 'rgba(7, 8, 12, 0.65)';
+        // Subtle dark cinematic tint for ambient background
+        ctx.fillStyle = 'rgba(7, 8, 12, 0.35)';
         ctx.fillRect(0, 0, cw, ch);
 
-        // 2. MAIN FULL-IMAGE SUBJECT (100% of photo visible, head and face never cropped)
-        // Headroom: leave ~75px from top so face sits comfortably below floating navbar
-        const availableH = Math.max(200, ch - 90);
-        const availableW = Math.max(200, Math.min(cw * 0.88, cw - 60));
-        const subjectScale = Math.min(availableH / ih, availableW / iw) * breathing;
+        // 2. CRISP FULL PHOTO IN BACKGROUND (100% complete photo visible, uncropped head & body)
+        const isMobile = cw < ch;
+        const scale = (isMobile ? (cw / iw) * 0.98 : (ch / ih) * 0.98) * breathing;
+        const nw = Math.round(iw * scale);
+        const nh = Math.round(ih * scale);
 
-        const nw = Math.round(iw * subjectScale);
-        const nh = Math.round(ih * subjectScale);
+        // Positioned in center with subtle dynamic drift
+        const px = Math.round((cw - nw) / 2 + panX);
+        const py = Math.round((ch - nh) / 2 + panY);
 
-        // Centered horizontally, top anchored below navbar
-        const px = (cw - nw) / 2 + panX;
-        const py = Math.max(75, (ch - nh) / 2) + panY;
-
-        // Subtle glow behind subject
+        // Subtle glowing aura behind subject
         const subjectGlow = ctx.createRadialGradient(
           cw / 2,
           py + nh * 0.35,
-          40,
+          30,
           cw / 2,
           py + nh * 0.45,
-          nw * 0.65
+          nw * 0.6
         );
-        subjectGlow.addColorStop(0, 'rgba(255, 30, 45, 0.15)');
-        subjectGlow.addColorStop(0.5, 'rgba(59, 130, 246, 0.05)');
+        subjectGlow.addColorStop(0, 'rgba(255, 30, 45, 0.18)');
+        subjectGlow.addColorStop(0.5, 'rgba(59, 130, 246, 0.08)');
         subjectGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = subjectGlow;
         ctx.fillRect(0, 0, cw, ch);
 
-        // Draw the complete, crisp photo
+        // Draw the complete, crisp, uncropped photo
         ctx.save();
         ctx.drawImage(img, px, py, nw, nh);
         ctx.restore();
 
-        // Soft perimeter feather on image outer edges so it blends seamlessly into background
-        const feather = Math.min(30, Math.round(nw * 0.04));
+        // Soft left & right side edge blend so crisp photo melts seamlessly into ambient backdrop
+        // (Head, sunglasses, face and body are never masked or covered with black paint!)
+        const featherW = Math.min(35, Math.round(nw * 0.04));
+        if (featherW > 0) {
+          const fLeft = ctx.createLinearGradient(px, 0, px + featherW, 0);
+          fLeft.addColorStop(0, 'rgba(7, 8, 12, 0.45)');
+          fLeft.addColorStop(1, 'rgba(7, 8, 12, 0)');
+          ctx.fillStyle = fLeft;
+          ctx.fillRect(px, py, featherW, nh);
 
-        const fLeft = ctx.createLinearGradient(px, 0, px + feather, 0);
-        fLeft.addColorStop(0, '#07080c');
-        fLeft.addColorStop(1, 'rgba(7, 8, 12, 0)');
-        ctx.fillStyle = fLeft;
-        ctx.fillRect(px, py, feather, nh);
+          const fRight = ctx.createLinearGradient(px + nw - featherW, 0, px + nw, 0);
+          fRight.addColorStop(0, 'rgba(7, 8, 12, 0)');
+          fRight.addColorStop(1, 'rgba(7, 8, 12, 0.45)');
+          ctx.fillStyle = fRight;
+          ctx.fillRect(px + nw - featherW, py, featherW, nh);
+        }
 
-        const fRight = ctx.createLinearGradient(px + nw - feather, 0, px + nw, 0);
-        fRight.addColorStop(0, 'rgba(7, 8, 12, 0)');
-        fRight.addColorStop(1, '#07080c');
-        ctx.fillStyle = fRight;
-        ctx.fillRect(px + nw - feather, py, feather, nh);
-
-        const fTop = ctx.createLinearGradient(0, py, 0, py + feather);
-        fTop.addColorStop(0, '#07080c');
-        fTop.addColorStop(1, 'rgba(7, 8, 12, 0)');
-        ctx.fillStyle = fTop;
-        ctx.fillRect(px, py, nw, feather);
-
-        const fBottom = ctx.createLinearGradient(0, py + nh - feather * 1.5, 0, py + nh);
-        fBottom.addColorStop(0, 'rgba(7, 8, 12, 0)');
-        fBottom.addColorStop(1, '#07080c');
-        ctx.fillStyle = fBottom;
-        ctx.fillRect(px, py + nh - feather * 1.5, nw, feather * 1.5);
-
-        // 3. READABILITY SHADING FOR FOREGROUND TEXT
-        // Left gradient for hero text block
-        const leftGrad = ctx.createLinearGradient(0, 0, cw * 0.45, 0);
-        leftGrad.addColorStop(0, 'rgba(7, 8, 12, 0.88)');
-        leftGrad.addColorStop(0.5, 'rgba(7, 8, 12, 0.55)');
+        // 3. GENTLE READABILITY SHADING FOR FOREGROUND TEXT (keeps photo luminous and clear)
+        const leftGrad = ctx.createLinearGradient(0, 0, cw * 0.38, 0);
+        leftGrad.addColorStop(0, 'rgba(7, 8, 12, 0.42)');
+        leftGrad.addColorStop(0.7, 'rgba(7, 8, 12, 0.15)');
         leftGrad.addColorStop(1, 'rgba(7, 8, 12, 0)');
         ctx.fillStyle = leftGrad;
-        ctx.fillRect(0, 0, cw * 0.45, ch);
-
-        // Right gradient for stats badge
-        const rightGrad = ctx.createLinearGradient(cw * 0.65, 0, cw, 0);
-        rightGrad.addColorStop(0, 'rgba(7, 8, 12, 0)');
-        rightGrad.addColorStop(0.5, 'rgba(7, 8, 12, 0.45)');
-        rightGrad.addColorStop(1, 'rgba(7, 8, 12, 0.85)');
-        ctx.fillStyle = rightGrad;
-        ctx.fillRect(cw * 0.65, 0, cw * 0.35, ch);
-
-        // Bottom gradient for bottom actions
-        const botGrad = ctx.createLinearGradient(0, ch * 0.65, 0, ch);
-        botGrad.addColorStop(0, 'rgba(7, 8, 12, 0)');
-        botGrad.addColorStop(1, 'rgba(7, 8, 12, 0.95)');
-        ctx.fillStyle = botGrad;
-        ctx.fillRect(0, ch * 0.65, cw, ch * 0.35);
+        ctx.fillRect(0, 0, cw * 0.38, ch);
 
         // 4. ANAMORPHIC VIDEO LENS FLARE SWEEP
         const sweepPeriod = 8;
         const sweepProgress = (time % sweepPeriod) / sweepPeriod;
         if (sweepProgress < 0.4) {
           const sweepX = (sweepProgress / 0.4) * (cw + 500) - 250;
-          const sweepGrad = ctx.createLinearGradient(sweepX - 120, 0, sweepX + 120, ch);
+          const sweepGrad = ctx.createLinearGradient(sweepX - 100, 0, sweepX + 100, ch);
           sweepGrad.addColorStop(0, 'rgba(255, 30, 45, 0)');
-          sweepGrad.addColorStop(0.5, 'rgba(255, 60, 80, 0.055)');
+          sweepGrad.addColorStop(0.5, 'rgba(255, 60, 80, 0.045)');
           sweepGrad.addColorStop(1, 'rgba(255, 30, 45, 0)');
           ctx.fillStyle = sweepGrad;
           ctx.fillRect(0, 0, cw, ch);
