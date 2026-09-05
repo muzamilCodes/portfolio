@@ -1,16 +1,10 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
-import Navbar from '@/app/components/Navbar'
-import Footer from '@/app/components/Footer'
-import DynamicBackground3D from '@/app/components/3d/DynamicBackground3D'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'War Muzamil | MERN Stack & Full Stack Developer',
-  description: 'Professional portfolio of War Muzamil, showcasing React.js, Next.js, Node.js, Express.js, MongoDB, .NET Core and TypeScript projects.',
-  keywords: ['War Muzamil', 'Muzamil War', 'MERN Stack Developer', 'Full Stack Developer', 'React Developer', 'Next.js Developer', 'Node.js Developer', 'Kashmir Developer'],
+  title: 'War Muzamil | Full Stack Developer & MERN Specialist',
+  description: 'Portfolio of War Muzamil - Full Stack Developer and MERN Specialist crafting high-performance, modern web applications with React, Next.js, Node.js and MongoDB.',
+  keywords: ['War Muzamil', 'MERN Stack Developer', 'Full Stack Developer', 'React Developer', 'Next.js Developer', 'Node.js Developer', 'Kashmir Developer'],
 }
 
 export default function RootLayout({
@@ -19,30 +13,23 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="en">
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                  document.documentElement.classList.add('dark');
-                } else {
-                  document.documentElement.classList.remove('dark');
-                }
-              } catch (_) {}
-            `,
-          }}
+        <link
+          rel="icon"
+          type="image/svg+xml"
+          href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307080c'/%3E%3Ctext x='32' y='44' font-family='Arial Black,Arial' font-size='34' font-weight='900' fill='%23ff1e2d' text-anchor='middle'%3EW%3C/text%3E%3C/svg%3E"
         />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fira+Code:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet"
+        />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
       </head>
-      <body className={`${inter.className} antialiased relative selection:bg-primary/30 selection:text-white`}>
-        <DynamicBackground3D />
-        <Navbar />
-        <main className="min-h-screen relative z-10">
-          {children}
-        </main>
-        <Footer />
-      </body>
+      <body>{children}</body>
     </html>
   )
 }
