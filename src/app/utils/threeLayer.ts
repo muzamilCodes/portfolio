@@ -76,10 +76,10 @@ export function startThreeLayer(canvas: HTMLCanvasElement): () => void {
     scene.add(mesh);
     shapes.push(mesh);
   }
-  addShape(new THREE.IcosahedronGeometry(1.7, 0), ACCENT, 0.35, -5.2, 2.4, -3.0);
-  addShape(new THREE.TorusKnotGeometry(1.1, 0.32, 64, 10), BLUE, 0.22, 5.6, -1.8, -3.5);
-  addShape(new THREE.OctahedronGeometry(1.0, 0), WHITE, 0.18, 4.4, 3.0, -5.0);
-  addShape(new THREE.TorusGeometry(1.3, 0.35, 10, 40), ACCENT, 0.22, -6.2, 1.2, -6.0);
+  addShape(new THREE.IcosahedronGeometry(1.6, 0), ACCENT, 0.25, -8.2, 2.8, -3.0);
+  addShape(new THREE.TorusKnotGeometry(1.0, 0.3, 64, 10), BLUE, 0.18, 8.2, -1.8, -3.5);
+  addShape(new THREE.OctahedronGeometry(1.0, 0), WHITE, 0.15, 7.2, 3.2, -5.0);
+  addShape(new THREE.TorusGeometry(1.2, 0.32, 10, 40), ACCENT, 0.18, -9.0, 1.0, -6.0);
 
   // ---- Interaction State ----
   let mouseX = 0;
