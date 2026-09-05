@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { startFrameEngine } from '@/app/utils/frameEngine';
 import { attachCardTilt, startThreeLayer } from '@/app/utils/threeLayer';
 
 export default function TemplatePortfolio() {
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const bgCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const threeCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const framesNoticeRef = useRef<HTMLDivElement | null>(null);
@@ -13,6 +14,33 @@ export default function TemplatePortfolio() {
   const yearRef = useRef<HTMLSpanElement | null>(null);
   const navPillRef = useRef<HTMLElement | null>(null);
   const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('theme') as 'dark' | 'light' | null;
+      if (saved === 'light') {
+        setTheme('light');
+        document.documentElement.classList.add('light');
+      } else {
+        setTheme('dark');
+        document.documentElement.classList.remove('light');
+      }
+    } catch {
+      // fallback
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    if (next === 'light') {
+      document.documentElement.classList.add('light');
+      try { localStorage.setItem('theme', 'light'); } catch {}
+    } else {
+      document.documentElement.classList.remove('light');
+      try { localStorage.setItem('theme', 'dark'); } catch {}
+    }
+  };
 
   useEffect(() => {
     const cleanups: Array<() => void> = [];
@@ -68,6 +96,16 @@ export default function TemplatePortfolio() {
           <a href="#skills" className="nav-link">Skills</a>
           <a href="#journey" className="nav-link">Journey</a>
           <a href="#contact" className="nav-link">Contact</a>
+          <button
+            type="button"
+            className="theme-toggle-btn"
+            id="theme-toggle"
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            <i className={`fa-solid ${theme === 'dark' ? 'fa-sun' : 'fa-moon'}`} />
+          </button>
         </nav>
       </div>
 

@@ -40,6 +40,18 @@
       --font-mono: 'Fira Code', monospace;
     }
 
+    /* Light Theme Tokens */
+    html.light {
+      --bg-dark: #f4f6fb;
+      --bg-card: rgba(255, 255, 255, 0.88);
+      --bg-card-hover: rgba(255, 255, 255, 0.98);
+      --border-card: rgba(15, 23, 42, 0.08);
+      --border-card-hover: rgba(255, 30, 45, 0.45);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-faint: #64748b;
+    }
+
     /* Reset & Base */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -53,6 +65,7 @@
       color: var(--text-main);
       font-family: var(--font-body);
       overflow-x: hidden;
+      transition: background-color 0.35s ease, color 0.35s ease;
     }
 
     body {
@@ -191,6 +204,30 @@
       color: #fff;
       background: var(--accent);
       box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      margin-left: 0.35rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      color: #fbbf24;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      flex-shrink: 0;
+    }
+
+    .theme-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1) rotate(15deg);
+      box-shadow: 0 0 14px rgba(251, 191, 36, 0.45);
     }
 
     /* Mobile Nav Toggle */
@@ -1100,6 +1137,146 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* ==========================================================================
+       LIGHT THEME STYLING
+       ========================================================================== */
+    html.light body {
+      color: #0f172a;
+    }
+
+    html.light .display-title,
+    html.light .section-heading,
+    html.light .stat-val,
+    html.light .about-lead,
+    html.light .about-lead strong,
+    html.light .service-title,
+    html.light .project-title,
+    html.light .journey-role,
+    html.light .contact-card h3,
+    html.light h1, html.light h2, html.light h3, html.light h4, html.light h5, html.light h6 {
+      color: #0f172a !important;
+    }
+
+    html.light .text-gradient {
+      background: linear-gradient(135deg, #0f172a 30%, #475569 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    html.light .glass-card,
+    html.light .hero-edge-badge,
+    html.light .service-box,
+    html.light .project-card,
+    html.light .skill-pill,
+    html.light .journey-item,
+    html.light .contact-card {
+      background: rgba(255, 255, 255, 0.88);
+      border-color: rgba(15, 23, 42, 0.1);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+      color: #0f172a;
+    }
+
+    html.light .glass-card:hover,
+    html.light .service-box:hover,
+    html.light .project-card:hover {
+      background: rgba(255, 255, 255, 0.98);
+      border-color: var(--border-card-hover);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.09), 0 0 20px rgba(255, 30, 45, 0.1);
+    }
+
+    html.light .stat-card-mini {
+      background: rgba(15, 23, 42, 0.04);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+    }
+    html.light .stat-card-mini .num {
+      color: #0f172a;
+    }
+
+    html.light .stat-row {
+      border-bottom-color: rgba(15, 23, 42, 0.08);
+    }
+
+    html.light .btn-secondary {
+      background: rgba(15, 23, 42, 0.06);
+      color: #0f172a;
+      border-color: rgba(15, 23, 42, 0.15);
+    }
+    html.light .btn-secondary:hover {
+      background: rgba(15, 23, 42, 0.12);
+      border-color: rgba(15, 23, 42, 0.25);
+    }
+
+    html.light .glass-badge {
+      background: rgba(15, 23, 42, 0.05);
+      border-color: rgba(15, 23, 42, 0.12);
+      color: #475569;
+    }
+
+    html.light .nav-pill {
+      background: rgba(255, 255, 255, 0.88);
+      border-color: rgba(15, 23, 42, 0.12);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 0 15px rgba(255, 30, 45, 0.06);
+    }
+
+    html.light .nav-link {
+      color: #64748b;
+    }
+    html.light .nav-link:hover {
+      color: #0f172a;
+    }
+    html.light .nav-link.active {
+      color: #fff;
+      background: var(--accent);
+    }
+
+    html.light .theme-toggle-btn {
+      background: rgba(15, 23, 42, 0.07);
+      border-color: rgba(15, 23, 42, 0.12);
+      color: #3b82f6;
+    }
+    html.light .theme-toggle-btn:hover {
+      background: rgba(15, 23, 42, 0.14);
+      box-shadow: 0 0 14px rgba(59, 130, 246, 0.4);
+    }
+
+    html.light .social-dock {
+      background: rgba(255, 255, 255, 0.88);
+      border-color: rgba(15, 23, 42, 0.12);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+    html.light .social-icon-btn {
+      color: #64748b;
+    }
+    html.light .social-icon-btn:hover {
+      color: #fff;
+      background: var(--accent);
+    }
+
+    html.light .vignette-overlay {
+      background: radial-gradient(circle at center, transparent 60%, rgba(244, 246, 251, 0.35) 85%, rgba(244, 246, 251, 0.75) 100%);
+    }
+
+    html.light .form-control,
+    html.light input,
+    html.light textarea {
+      background: rgba(255, 255, 255, 0.95) !important;
+      color: #0f172a !important;
+      border-color: rgba(15, 23, 42, 0.15) !important;
+    }
+
+    html.light .form-control:focus,
+    html.light input:focus,
+    html.light textarea:focus {
+      border-color: var(--accent) !important;
+      box-shadow: 0 0 15px var(--accent-glow) !important;
+    }
+
+    html.light .mobile-menu-btn {
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(15, 23, 42, 0.15);
+      color: #0f172a;
+    }
   </style>
 </head>
 <body>
@@ -1132,6 +1309,9 @@
       <a href="#skills" class="nav-link">Skills</a>
       <a href="#journey" class="nav-link">Journey</a>
       <a href="#contact" class="nav-link">Contact</a>
+      <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle dark/light mode" title="Toggle Theme">
+        <i class="fa-solid fa-sun" id="theme-toggle-icon"></i>
+      </button>
     </nav>
   </div>
 
@@ -2366,6 +2546,46 @@
           });
         }
       }
+
+      // ---- Theme Toggle Controller (Dark / Light Mode) ----
+      (function initTheme() {
+        const toggleBtn = document.getElementById('theme-toggle');
+        const toggleIcon = document.getElementById('theme-toggle-icon');
+
+        function applyTheme(isLight) {
+          if (isLight) {
+            document.documentElement.classList.add('light');
+            if (toggleIcon) {
+              toggleIcon.className = 'fa-solid fa-moon';
+            }
+          } else {
+            document.documentElement.classList.remove('light');
+            if (toggleIcon) {
+              toggleIcon.className = 'fa-solid fa-sun';
+            }
+          }
+        }
+
+        try {
+          const saved = localStorage.getItem('theme');
+          if (saved === 'light') {
+            applyTheme(true);
+          } else {
+            applyTheme(false);
+          }
+        } catch (e) {}
+
+        if (toggleBtn) {
+          toggleBtn.addEventListener('click', () => {
+            const isLight = document.documentElement.classList.contains('light');
+            const next = !isLight;
+            applyTheme(next);
+            try {
+              localStorage.setItem('theme', next ? 'light' : 'dark');
+            } catch (e) {}
+          });
+        }
+      })();
     })();
   </script>
 </body>
