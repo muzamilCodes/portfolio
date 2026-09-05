@@ -41,9 +41,17 @@ export function startFrameEngine(handles: FrameEngineHandles): () => void {
   let rafId = 0;
 
   const fallbackImage = new Image();
-  let fadeCanvas: HTMLCanvasElement | null = null;
-  let fadeW = 0;
-  let fadeH = 0;
+  let time = 0;
+  let mouseX = 0;
+  let mouseY = 0;
+  let targetMouseX = 0;
+  let targetMouseY = 0;
+
+  function onMouseMove(e: MouseEvent) {
+    targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  }
+  window.addEventListener('mousemove', onMouseMove, { passive: true });
 
   const particles: Particle[] = [];
   const PARTICLE_COUNT = 60;
@@ -155,74 +163,87 @@ export function startFrameEngine(handles: FrameEngineHandles): () => void {
     ctx.drawImage(img, cx, cy, nw, nh);
   }
 
-  // ---------- Dark-mode cinematic fallback ----------
+  // ---------- Full-screen cinematic video motion fallback ----------
   function renderFallback() {
     if (hasCustomFrames) return;
 
     const cw = window.innerWidth;
     const ch = window.innerHeight;
+    time += 0.016;
+
+    // Smooth mouse inertia tracking for interactive camera drift
+    mouseX += (targetMouseX - mouseX) * 0.04;
+    mouseY += (targetMouseY - mouseY) * 0.04;
 
     ctx.clearRect(0, 0, cw, ch);
 
-    // Deep dark-mode background
-    ctx.fillStyle = '#05060a';
-    ctx.fillRect(0, 0, cw, ch);
-
-    // Ambient radial light behind subject
-    const grad = ctx.createRadialGradient(cw / 2, ch * 0.42, 50, cw / 2, ch / 2, cw * 0.55);
-    grad.addColorStop(0, 'rgba(255, 30, 45, 0.10)');
-    grad.addColorStop(0.5, 'rgba(59, 130, 246, 0.04)');
-    grad.addColorStop(1, 'rgba(5, 6, 10, 0)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, cw, ch);
-
-    // Profile photo centered (contain-fit) with soft radial edge fade
     if (fallbackLoaded && fallbackImage.complete) {
       const img = fallbackImage;
       const iw = img.naturalWidth || img.width;
       const ih = img.naturalHeight || img.height;
       if (iw && ih) {
-        const scale = Math.min((ch * 0.88) / ih, (cw * 0.7) / iw);
-        const nw = Math.max(1, Math.round(iw * scale));
-        const nh = Math.max(1, Math.round(ih * scale));
-        const px = (cw - nw) / 2;
-        const py = (ch - nh) / 2 - ch * 0.02;
+        // Scroll fraction for scroll-scrub video camera animation
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollFrac = maxScroll > 0 ? Math.min(Math.max(scrollTop / maxScroll, 0), 1) : 0;
 
-        if (!fadeCanvas || fadeW !== nw || fadeH !== nh) {
-          fadeCanvas = fadeCanvas || document.createElement('canvas');
-          fadeCanvas.width = nw;
-          fadeCanvas.height = nh;
-          const fctx = fadeCanvas.getContext('2d');
-          if (fctx) {
-            fctx.clearRect(0, 0, nw, nh);
-            fctx.drawImage(img, 0, 0, nw, nh);
-            const fade = fctx.createRadialGradient(
-              nw / 2, nh / 2, Math.min(nw, nh) * 0.26,
-              nw / 2, nh / 2, Math.max(nw, nh) * 0.55
-            );
-            fade.addColorStop(0, 'rgba(0,0,0,1)');
-            fade.addColorStop(1, 'rgba(0,0,0,0)');
-            fctx.globalCompositeOperation = 'destination-in';
-            fctx.fillStyle = fade;
-            fctx.fillRect(0, 0, nw, nh);
-            fctx.globalCompositeOperation = 'source-over';
-          }
-          fadeW = nw;
-          fadeH = nh;
-        }
+        // Continuous organic video camera motion: slow breathing zoom + drift + scroll tracking
+        const organicZoom = 1.07 + 0.035 * Math.sin(time * 0.38) + scrollFrac * 0.06;
+        const panX = Math.sin(time * 0.22) * 18 + mouseX * 24;
+        const panY = Math.cos(time * 0.28) * 14 + mouseY * 18 - scrollFrac * 40;
+
+        // Full-bleed cover scale: image covers the entire background completely
+        const baseScale = Math.max(cw / iw, ch / ih);
+        const finalScale = baseScale * organicZoom;
+        const nw = iw * finalScale;
+        const nh = ih * finalScale;
+        const px = (cw - nw) / 2 + panX;
+        const py = (ch - nh) / 2 + panY;
 
         ctx.save();
-        ctx.globalAlpha = 0.5;
-        ctx.drawImage(fadeCanvas, px, py);
+        ctx.drawImage(img, px, py, nw, nh);
         ctx.restore();
 
-        // Bottom fade keeps hero text readable
-        const bottomFade = ctx.createLinearGradient(0, ch * 0.55, 0, ch);
-        bottomFade.addColorStop(0, 'rgba(5, 6, 10, 0)');
-        bottomFade.addColorStop(1, 'rgba(5, 6, 10, 0.88)');
-        ctx.fillStyle = bottomFade;
-        ctx.fillRect(0, ch * 0.55, cw, ch * 0.45);
+        // Atmospheric dark-mode film grading: preserves subject clarity while keeping text 100% readable
+        const darkGrad = ctx.createLinearGradient(0, 0, 0, ch);
+        darkGrad.addColorStop(0, 'rgba(7, 8, 12, 0.48)');
+        darkGrad.addColorStop(0.4, 'rgba(7, 8, 12, 0.32)');
+        darkGrad.addColorStop(0.75, 'rgba(7, 8, 12, 0.65)');
+        darkGrad.addColorStop(1, 'rgba(7, 8, 12, 0.94)');
+        ctx.fillStyle = darkGrad;
+        ctx.fillRect(0, 0, cw, ch);
+
+        // Radial vignette focusing on subject in center
+        const radialVignette = ctx.createRadialGradient(
+          cw / 2 + mouseX * 35,
+          ch * 0.42 + mouseY * 25,
+          Math.min(cw, ch) * 0.25,
+          cw / 2,
+          ch / 2,
+          Math.max(cw, ch) * 0.75
+        );
+        radialVignette.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        radialVignette.addColorStop(0.7, 'rgba(5, 6, 10, 0.32)');
+        radialVignette.addColorStop(1, 'rgba(5, 6, 10, 0.78)');
+        ctx.fillStyle = radialVignette;
+        ctx.fillRect(0, 0, cw, ch);
+
+        // Anamorphic video light flare sweep across the screen
+        const sweepPeriod = 8;
+        const sweepProgress = (time % sweepPeriod) / sweepPeriod;
+        if (sweepProgress < 0.4) {
+          const sweepX = (sweepProgress / 0.4) * (cw + 500) - 250;
+          const sweepGrad = ctx.createLinearGradient(sweepX - 120, 0, sweepX + 120, ch);
+          sweepGrad.addColorStop(0, 'rgba(255, 30, 45, 0)');
+          sweepGrad.addColorStop(0.5, 'rgba(255, 50, 70, 0.055)');
+          sweepGrad.addColorStop(1, 'rgba(255, 30, 45, 0)');
+          ctx.fillStyle = sweepGrad;
+          ctx.fillRect(0, 0, cw, ch);
+        }
       }
+    } else {
+      ctx.fillStyle = '#05060a';
+      ctx.fillRect(0, 0, cw, ch);
     }
 
     // Ambient particles (skipped when the Three.js 3D layer is active)
@@ -361,6 +382,7 @@ export function startFrameEngine(handles: FrameEngineHandles): () => void {
   return () => {
     cancelAnimationFrame(rafId);
     clearTimeout(typeTimer);
+    window.removeEventListener('mousemove', onMouseMove);
     window.removeEventListener('resize', resizeCanvas);
     window.removeEventListener('scroll', onScroll);
     mobileToggle?.removeEventListener('click', onMenuToggle);
